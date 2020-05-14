@@ -96,10 +96,8 @@ public class Datum {
 			default:
 				return false;
 		}
-
 		// Dag moet in de maand zitten. Als dit goed is, zijn alle checks volstaan, en returnt het true.
 		return dag >= 1 && dag <= dagenInMaand;
-
 	}
 
 	/**

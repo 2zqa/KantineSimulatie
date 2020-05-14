@@ -25,7 +25,7 @@ public class Persoon {
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
-        this.geslacht = geslacht;
+        setGeslacht(geslacht);
     }
 
     /**
@@ -99,8 +99,8 @@ public class Persoon {
      * Methode welke de geboortedatum van een persoon opvraagt
      * @return de geboortedatum als String
      */
-    public Datum getGeboortedatum() {
-        return geboortedatum;
+    public String getGeboortedatum() {
+        return geboortedatum.getDatumAsString();
     }
 
     /**
@@ -108,11 +108,11 @@ public class Persoon {
      * @param geslacht is het geslacht van een persoon, dit is 'M' of 'V'
      */
     public void setGeslacht(char geslacht) {
-        if (geslacht == 'M' || geslacht == 'V') {
-            this.geslacht = geslacht;
-        } else {
-            System.out.println("Foutmelding, enkel man 'M' of vrouw 'V' mogelijk");
-        }
+            if(checkGeslacht(geslacht) == true) {
+                this.geslacht = geslacht;
+            } else {
+                System.out.println("Ongeldig geslacht");
+            }
     }
 
     /**
@@ -128,5 +128,28 @@ public class Persoon {
             default:
                 return "Onbekend";
         }
+    }
+
+    /**
+     * Methode welke het geslacht checkt op juistheid
+     * @param geslacht is het geslacht van een persoon als char
+     * @return true als het geslacht 'M' of 'V' is, anders false en een foutmelding
+     */
+    public boolean checkGeslacht(char geslacht){
+        if (geslacht == 'M' || geslacht == 'V') {
+            return true;
+        } else {
+            System.out.println("Ongeldig geslacht, enkel man 'M' of vrouw 'V' mogelijk");
+            return false;
+        }
+    }
+
+    /**
+     * Methode welke alle velden afdrukt
+     * @return alle velden
+     */
+    @Override
+    public String toString(){
+        return "Voornaam: " + getVoornaam() + "\n" + "Achternaam: " + getAchternaam() + "\n" + "BSN: " + getBsn() + "\n" + "Geboortedatum: " + getGeboortedatum() + "\n" + "Geslacht: " + getGeslacht();
     }
 }

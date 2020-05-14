@@ -60,4 +60,13 @@ public class Artikel {
     public void setNaam(String naam) {
         this.naam = naam;
     }
+
+    /**
+     * Methode welke alle velden afdrukt
+     * @return alle velden
+     */
+    @Override
+    public String toString(){
+        return "Naam: " + getNaam() + "\n" + "Prijs: " + getPrijs();
+    }
 }
