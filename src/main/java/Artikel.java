@@ -5,27 +5,27 @@
  * @version 14-05-2020
  */
 public class Artikel {
-    private String name;
+    private String naam;
     private float prijs;
 
     /**
      * Constructor van de klasse Artikel
      *
-     * @param name is de naam van het artikel
+     * @param naam is de naam van het artikel
      * @param prijs is de prijs van het artikel
      */
-    public Artikel(String name, float prijs) {
-        this.name = name;
+    public Artikel(String naam, float prijs) {
+        this.naam = naam;
         this.prijs = prijs;
     }
     /**
      * Constructor van de klasse Artikel
      */
         public Artikel(){
-            name = null;
+            naam = null;
             prijs = 0;
         }
-        /**
+     /**
      * methode welke de prijs van het artikel opvraagt
      *
      * @return returns de prijs van het artikel
@@ -48,16 +48,16 @@ public class Artikel {
      *
      * @return returns de naam van het artikel
      */
-    public String getName() {
-        return name;
+    public String getNaam() {
+        return naam;
     }
 
     /**
      * Methode welke de naam van een artikel set
      *
-     * @param name is de naam van het artikel
+     * @param naam is de naam van het artikel
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
 }
