@@ -11,8 +11,8 @@ public class Artikel {
     /**
      * Constructor van de klasse Artikel
      *
-     * @param naam is de naam van het artikel
-     * @param prijs is de prijs van het artikel
+     * @param naam is de naam van het artikel als String
+     * @param prijs is de prijs van het artikel als float
      */
     public Artikel(String naam, float prijs) {
         this.naam = naam;
@@ -28,14 +28,14 @@ public class Artikel {
      /**
      * methode welke de prijs van het artikel opvraagt
      *
-     * @return returns de prijs van het artikel
+     * @return de prijs van het artikel als float
      */
     public float getPrijs() {
         return prijs;
     }
 
     /**
-     * Methode welke de prijs van een artikel set
+     * Methode welke de prijs van een artikel set als float
      *
      * @param prijs is de prijs van een artikel
     */
@@ -46,14 +46,14 @@ public class Artikel {
     /**
      * methode welke de naam van een artikel opvraagt
      *
-     * @return returns de naam van het artikel
+     * @return de naam van het artikel als String
      */
     public String getNaam() {
         return naam;
     }
 
     /**
-     * Methode welke de naam van een artikel set
+     * Methode welke de naam van een artikel set als String
      *
      * @param naam is de naam van het artikel
      */
