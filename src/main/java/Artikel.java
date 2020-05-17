@@ -6,7 +6,7 @@
  */
 public class Artikel {
     private String naam;
-    private float prijs;
+    private double prijs; //double?
 
     /**
      * Constructor van de klasse Artikel
@@ -14,23 +14,24 @@ public class Artikel {
      * @param naam is de naam van het artikel als String
      * @param prijs is de prijs van het artikel als float
      */
-    public Artikel(String naam, float prijs) {
+    public Artikel(String naam, double prijs) {
         this.naam = naam;
         this.prijs = prijs;
     }
+
     /**
      * Constructor van de klasse Artikel
      */
         public Artikel(){
-            naam = null;
-            prijs = 0;
+            this(null, 0);
         }
+
      /**
      * methode welke de prijs van het artikel opvraagt
      *
      * @return de prijs van het artikel als float
      */
-    public float getPrijs() {
+    public double getPrijs() {
         return prijs;
     }
 

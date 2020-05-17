@@ -5,7 +5,6 @@
  * @version 14-05-2020
  */
 public class Datum {
-
 	private int dag;
 	private int maand;
 	private int jaar;

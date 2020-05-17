@@ -1,5 +1,4 @@
 public class Kassa {
-
     private int totaalAantalVerkochteArtikelen;
     private double totaalHoeveelheidGeld;
 
