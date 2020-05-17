@@ -50,7 +50,6 @@ public class Dienblad {
         for (Artikel artikel : artikelen) {
             totaalPrijs += artikel.getPrijs();
         }
-
         return totaalPrijs;
     }
 
