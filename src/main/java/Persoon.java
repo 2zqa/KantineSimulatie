@@ -108,7 +108,7 @@ public class Persoon {
      * @param geslacht is het geslacht van een persoon, dit is 'M' of 'V'
      */
     public void setGeslacht(char geslacht) {
-            if(checkGeslacht(geslacht) == true) {
+            if(checkGeslacht(geslacht)) {
                 this.geslacht = geslacht;
             } else {
                 System.out.println("Ongeldig geslacht");
