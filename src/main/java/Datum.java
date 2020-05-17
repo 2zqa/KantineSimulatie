@@ -10,6 +10,12 @@ public class Datum {
 	private int maand;
 	private int jaar;
 
+	/**
+	 * Stelt de datum in. Als de datum niet geldig is, zal de datum naar 00-00-0 zijn.
+	 * @param dag dag van de maand
+	 * @param maand maand van het jaar
+	 * @param jaar jaartal
+	 */
 	public Datum(int dag, int maand, int jaar) {
 		this();
 		// Check of datum correct is
@@ -20,16 +26,26 @@ public class Datum {
 		}
 	}
 
+	/**
+	 * Stelt de datum in als er geen parameters gegeven zijn
+	 */
 	public Datum() {
 		this.dag = 0;
 		this.maand = 0;
 		this.jaar = 0;
 	}
 
+	/**
+	 * get dag
+	 * @return dag
+	 */
 	public int getDag() {
 		return dag;
 	}
 
+	/**
+	 * set dag
+	 */
 	public void setDag(int dag) {
 		this.dag = dag;
 	}
@@ -38,14 +54,26 @@ public class Datum {
 		return maand;
 	}
 
+	/**
+	 * set maand
+	 * @param maand maand van het jaar
+	 */
 	public void setMaand(int maand) {
 		this.maand = maand;
 	}
 
+	/**
+	 * get jaar
+	 * @return jaar
+	 */
 	public int getJaar() {
 		return jaar;
 	}
 
+	/**
+	 * set jaar
+	 * @param jaar jaartal
+	 */
 	public void setJaar(int jaar) {
 		this.jaar = jaar;
 	}
