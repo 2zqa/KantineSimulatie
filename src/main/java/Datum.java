@@ -5,7 +5,6 @@
  * @version 14-05-2020
  */
 public class Datum {
-
 	private int dag;
 	private int maand;
 	private int jaar;
@@ -138,11 +137,15 @@ public class Datum {
 			String maandString = "";
 
 			// Dag
-			if(dag < 10) { dagString = "0"; }
+			if(dag < 10) {
+				dagString = "0";
+			}
 			dagString += ((Integer)dag).toString();
 
 			// Maand
-			if(maand < 10) { maandString = "0"; }
+			if(maand < 10) {
+				maandString = "0";
+			}
 			maandString += ((Integer)maand).toString();
 
 			String jaarString = ((Integer)jaar).toString();
