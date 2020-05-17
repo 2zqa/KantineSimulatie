@@ -29,7 +29,7 @@ public class Kassa {
 
     /**
      * Geeft het aantal artikelen dat de kassa heeft gepasseerd, vanaf het moment dat de methode
-     * resetWaarden is aangeroepen.
+     * resetKassa is aangeroepen.
      *
      * @return aantal artikelen
      */
@@ -53,5 +53,6 @@ public class Kassa {
      */
     public void resetKassa() {
         totaalAantalVerkochteArtikelen = 0;
+        totaalHoeveelheidGeld = 0;
     }
 }
