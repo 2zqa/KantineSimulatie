@@ -150,6 +150,8 @@ public class Persoon {
      */
     @Override
     public String toString(){
-        return "Voornaam: " + getVoornaam() + "\n" + "Achternaam: " + getAchternaam() + "\n" + "BSN: " + getBsn() + "\n" + "Geboortedatum: " + getGeboortedatum() + "\n" + "Geslacht: " + getGeslacht();
+        return "Voornaam: " + getVoornaam() + "\n" + "Achternaam: " + getAchternaam()
+                + "\n" + "BSN: " + getBsn() + "\n" + "Geboortedatum: " + getGeboortedatum()
+                + "\n" + "Geslacht: " + getGeslacht();
     }
 }
