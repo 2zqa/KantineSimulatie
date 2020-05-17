@@ -28,8 +28,8 @@ public class KassaRij {
      */
     public Dienblad eerstePersoonInRij() {
         if (klanten.size() > 0){
-            Dienblad eerstePersoonInRij = klanten.get(1);
-            klanten.remove(1);
+            Dienblad eerstePersoonInRij = klanten.get(0);
+            klanten.remove(0);
             return eerstePersoonInRij;
         } else {
             return null;
@@ -39,7 +39,7 @@ public class KassaRij {
     /**
      * Methode kijkt of er personen in de rij staan.
      *
-     * @return Of er wel of geen rij bestaat
+     * @return false als er geen personen in de rij staan en true als er wel personen in de rij staan
      */
     public boolean erIsEenRij() {
         return klanten.size() != 0;
