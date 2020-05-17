@@ -35,7 +35,7 @@ public class Datum {
 	}
 
 	/**
-	 * get dag
+	 * Retourneert de dag
 	 * @return dag
 	 */
 	public int getDag() {
@@ -43,7 +43,7 @@ public class Datum {
 	}
 
 	/**
-	 * set dag
+	 * Stelt de dag in
 	 */
 	public void setDag(int dag) {
 		this.dag = dag;
@@ -54,7 +54,7 @@ public class Datum {
 	}
 
 	/**
-	 * set maand
+	 * Stelt de maand in
 	 * @param maand maand van het jaar
 	 */
 	public void setMaand(int maand) {
@@ -62,7 +62,7 @@ public class Datum {
 	}
 
 	/**
-	 * get jaar
+	 * Retourneert het jaar
 	 * @return jaar
 	 */
 	public int getJaar() {
@@ -70,7 +70,7 @@ public class Datum {
 	}
 
 	/**
-	 * set jaar
+	 * Stelt het jaar in
 	 * @param jaar jaartal
 	 */
 	public void setJaar(int jaar) {
@@ -121,10 +121,15 @@ public class Datum {
 					dagenInMaand = 28;
 				break;
 			default:
+				// Dit is voor maanden die niet in de cases staan, ofwel waardes die niet 1-12 zijn
 				return false;
 		}
 		// Dag moet in de maand zitten. Als dit goed is, zijn alle checks volstaan, en returnt het true.
-		return dag >= 1 && dag <= dagenInMaand;
+		if (dag >= 1 && dag <= dagenInMaand) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

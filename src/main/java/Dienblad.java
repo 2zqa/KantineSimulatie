@@ -16,7 +16,7 @@ public class Dienblad {
     }
 
     /**
-     * Voeg dienblad toe zonder klant
+     * Dit roept de andere constructor "public Dienblad(Persoon klant)" aan, met de parameter "Persoon klant" null
      */
     public Dienblad() {
         this(null);
