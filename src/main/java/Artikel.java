@@ -6,7 +6,7 @@
  */
 public class Artikel {
     private String naam;
-    private double prijs; //double?
+    private double prijs;
 
     /**
      * Constructor van de klasse Artikel

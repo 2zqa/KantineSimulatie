@@ -32,11 +32,8 @@ public class Persoon {
      * Constructor van de klasse Persoon
      */
     public Persoon() {
-        bsn = null;
-        voornaam = null;
-        achternaam = null;
         geboortedatum = new Datum();
-        geslacht = '\u0000';
+        geslacht = 'O';
     }
 
     /**
@@ -112,6 +109,7 @@ public class Persoon {
                 this.geslacht = geslacht;
             } else {
                 System.out.println("Ongeldig geslacht");
+                this.geslacht = 'O';
             }
     }
 
