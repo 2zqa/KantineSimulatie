@@ -34,34 +34,17 @@ public class Kantine {
      */
     public void verwerkRijVoorKassa() {
         while (kassarij.erIsEenRij()) {
-            Dienblad klant = kassarij.eerstePersoonInRij();
+            Dienblad klant = kassarij.eerstePersoonInRij(); //Hier wordt de klant uit de rij gehaald en gereturnd
             kassa.rekenAf(klant);
         }
     }
 
     /**
-     * Deze methode telt het geld uit de kassa
+     * methode welke de kassa van de kantine opvraagt
      *
-     * @return hoeveelheid geld in kassa
+     * @return kassa
      */
-    public double hoeveelheidGeldInKassa() {
-        return kassa.hoeveelheidGeldInKassa();
-    }
-
-    /**
-     * Deze methode geeft het aantal gepasseerde artikelen.
-     *
-     * @return het aantal gepasseerde artikelen
-     */
-    public int aantalArtikelen() {
-        return kassa.aantalArtikelen()
-    }
-
-    /**
-     * Deze methode reset de bijgehouden telling van het aantal artikelen en "leegt" de inhoud van
-     * de kassa.
-     */
-    public void resetKassa() {
-        kassa.resetKassa();
+    public Kassa getKassa() {
+        return kassa;
     }
 }
