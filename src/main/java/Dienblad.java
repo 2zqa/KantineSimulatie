@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Stack;
+import java.util.Iterator;
 
 public class Dienblad {
-    private ArrayList<Artikel> artikelen;
+    private Stack<Artikel> artikelen;
     private Persoon klant;
 
     /**
@@ -12,7 +11,7 @@ public class Dienblad {
      */
     public Dienblad(Persoon klant) {
         this.klant = klant;
-        this.artikelen = new ArrayList<>();
+        this.artikelen = new Stack<>();
     }
 
     /**
