@@ -16,15 +16,13 @@ public class Kantine {
      * Artikelen aan en plaats deze op het dienblad. Tenslotte sluit de Persoon zich aan bij de rij
      * voor de kassa.
      */
-    public void loopPakSluitAan(Dienblad dienblad, String[] artikelnamen) {
+    public void loopPakSluitAan(Dienblad dienblad, String[] artikelnamen, double[] artikelprijzen) {
         Persoon persoon = new Persoon();
         dienblad.setKlant(persoon);
 
-        for(String artikelnaam : artikelnamen) {
-            // Waar haal ik de prijs vandaan? Het staat niet in de aangegeven header. Nu maar placeholder gebruikt.
-            dienblad.voegToe(new Artikel(artikelnaam, 1.50));
+        for(int i=0; i<artikelnamen.length;i++) {
+            dienblad.voegToe(new Artikel(artikelnamen[i], artikelprijzen[i]));
         }
-
         kassarij.sluitAchteraan(dienblad);
     }
 
@@ -53,7 +51,7 @@ public class Kantine {
      * @return het aantal gepasseerde artikelen
      */
     public int aantalArtikelen() {
-        return kassa.aantalArtikelen()
+        return kassa.aantalArtikelen();
     }
 
     /**
