@@ -2,6 +2,8 @@ public class Kantine {
     private Kassa kassa;
     private KassaRij kassarij;
 
+    private KantineAanbod kantineaanbod;
+
     /**
      * Constructor
      */
@@ -15,16 +17,14 @@ public class Kantine {
      * Artikelen aan en plaats deze op het dienblad. Tenslotte sluit de Persoon zich aan bij de rij
      * voor de kassa.
      */
-    public void loopPakSluitAan() {
+    public void loopPakSluitAan(Dienblad dienblad, String[] artikelnamen) {
         Persoon persoon = new Persoon();
-        Dienblad dienblad = new Dienblad();
         dienblad.setKlant(persoon);
 
-        Artikel artikel1 = new Artikel();
-        Artikel artikel2 = new Artikel();
-
-        dienblad.voegToe(artikel1);
-        dienblad.voegToe(artikel2);
+        for(String artikelnaam : artikelnamen) {
+            // Waar haal ik de prijs vandaan? Het staat niet in de aangegeven header. Nu maar placeholder gebruikt.
+            dienblad.voegToe(new Artikel(artikelnaam, 1.50));
+        }
 
         kassarij.sluitAchteraan(dienblad);
     }
@@ -63,5 +63,13 @@ public class Kantine {
      */
     public void resetKassa() {
         kassa.resetKassa();
+    }
+
+    public KantineAanbod getKantineaanbod() {
+        return kantineaanbod;
+    }
+
+    public void setKantineaanbod(KantineAanbod kantineaanbod) {
+        this.kantineaanbod = kantineaanbod;
     }
 }

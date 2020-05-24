@@ -1,0 +1,5 @@
+2.5 a) De methodes zijn private omdat het de bedoeling is dat ze alleen intern gebruikt worden.
+    b) Een HashMap is om twee objecten aan elkaar te linken. Als a en b aan elkaar gelinkt zijn, en ik vraag de waarde
+       die bij a zit, zal ik b terugkrijgen.
+       Bij een HashSet worden er geen objecten aan elkaar gelinkt, er wordt slechts een lijst van objecten opgeslagen.
+       Alle objecten zijn ook uniek.
