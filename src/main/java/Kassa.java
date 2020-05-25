@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class Kassa {
     private int totaalAantalVerkochteArtikelen;
     private double totaalHoeveelheidGeld;
@@ -18,12 +20,43 @@ public class Kassa {
      * @param klant die moet afrekenen
      */
     public void rekenAf(Dienblad klant) {
-        int aantalArtikelen = klant.getAantalArtikelen();
-        double totaalPrijs = klant.getTotaalPrijs();
+        int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
+        double totaalPrijs = getTotaalPrijsOpDienblad(klant);
 
         // Tel aantal producten en de totaalprijs toe op bij klassenvelden
         totaalAantalVerkochteArtikelen += aantalArtikelen;
         totaalHoeveelheidGeld += totaalPrijs;
+
+    }
+
+    /**
+     * Methode om aantal artikelen op dienblad te tellen
+     *
+     * @return Het aantal artikelen
+     */
+    public int getAantalArtikelenOpDienblad(Dienblad klant) {
+        Iterator<Artikel> it = klant.getLijstVanAlleArtikelen();
+        int aantal = 0;
+        while (it.hasNext()) {
+            Artikel artikel = it.next();
+            aantal++;
+        }
+        return aantal;
+    }
+
+    /**
+     * Methode om de totaalprijs van de artikelen op dienblad uit te rekenen
+     *
+     * @return De totaalprijs
+     */
+    public double getTotaalPrijsOpDienblad(Dienblad klant) {
+        Iterator<Artikel> it = klant.getLijstVanAlleArtikelen();
+        int totaalPrijs = 0;
+        while (it.hasNext()) {
+            Artikel artikel = it.next();
+            totaalPrijs += artikel.getPrijs();
+        }
+        return totaalPrijs;
     }
 
     /**
@@ -54,4 +87,6 @@ public class Kassa {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
     }
+
+
 }
