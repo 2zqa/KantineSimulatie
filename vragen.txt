@@ -3,3 +3,7 @@
        die bij a zit, zal ik b terugkrijgen.
        Bij een HashSet worden er geen objecten aan elkaar gelinkt, er wordt slechts een lijst van objecten opgeslagen.
        Alle objecten zijn ook uniek.
+3.2 c) Omdat java een lege constructor zonder parameters voor je aanmaakt.
+    d) Omdat de methodes volledig op zichzelf staan.
+    e) Een constructor is vereist om een klasse te initialiseren. Als deze private is
+       kan deze dus niet aangeroepen worden.
