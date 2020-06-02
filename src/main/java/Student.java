@@ -23,6 +23,15 @@ public class Student extends Persoon {
     public void setStudierichting(String studierichting) {
         this.studierichting = studierichting;
     }
+
+    /**
+     * Methode welke alle velden afdrukt
+     * @return alle velden
+     */
+    @Override
+    public String toString(){
+        return super.toString() + "Studentnummer: " + getStudentnummer() + "\n" + "Studierichting: " + getStudierichting();
+    }
 }
 
 
