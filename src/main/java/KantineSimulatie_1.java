@@ -1,4 +1,4 @@
-public class KantineSimulatie {
+public class KantineSimulatie_1 {
 
     private Kantine kantine;
 
@@ -7,7 +7,7 @@ public class KantineSimulatie {
     /**
      * Constructor
      */
-    public KantineSimulatie() {
+    public KantineSimulatie_1() {
         kantine = new Kantine();
     }
 
@@ -40,18 +40,18 @@ public class KantineSimulatie {
         }
     }
 
-    /**
-     * Start een simulatie
-     */
-    public static void main(String[] args) {
-        int dagen;
-
-        if (args.length == 0) {
-            dagen = DAGEN;
-        } else {
-            dagen = Integer.parseInt(args[0]);
-        }
-        //object maken en vanaf daar aanroepen
-        simuleer(dagen);
-    }
+//    /**
+//     * Start een simulatie
+//     */
+//    public static void main(String[] args) {
+//        int dagen;
+//
+//        if (args.length == 0) {
+//            dagen = DAGEN;
+//        } else {
+//            dagen = Integer.parseInt(args[0]);
+//        }
+//        //object maken en vanaf daar aanroepen
+//        simuleer(dagen);
+//    }
 }
