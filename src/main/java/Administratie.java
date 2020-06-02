@@ -10,23 +10,28 @@ public class Administratie {
     /**
      * Deze methode berekent van de int array aantal de gemiddelde waarde
      *
-     * @param aantal
+     * @param waardes
      * @return het gemiddelde
      */
-    public static double berekenGemiddeldAantal(int[] aantal) {
-        switch(aantal.length) {
+    public static double berekenGemiddeldAantal(int[] waardes) {
+        double result;
+        switch (waardes.length) {
             case 0:
-                return 0.0;
+                result = 0.0;
+                break;
             case 1:
-                return aantal[0];
+                result = waardes[0];
+                break;
             default:
-                int n = aantal.length;
+                int n = waardes.length;
                 int sum = 0;
-                for(int i : aantal) {
+                for (int i : waardes) {
                     sum += i;
                 }
-                return (double) sum/n;
+                result = (double) sum / n;
+                break;
         }
+        return result;
     }
 
     /**
@@ -38,20 +43,26 @@ public class Administratie {
      * @return het gemiddelde
      */
     public static double berekenGemiddeldeOmzet(double[] omzet) {
-        switch(omzet.length) {
+        double result;
+        switch (omzet.length) {
             case 0:
-                return 0.0;
+                result = 0.0;
+                break;
             case 1:
-                return omzet[0];
+                result = omzet[0];
+                break;
             default:
                 int n = omzet.length;
                 double sum = 0;
-                for(double i : omzet) {
+                for (double i : omzet) {
                     sum += i;
                 }
-                return sum/n;
+                result = sum / n;
+                break;
         }
+        return result;
     }
+
 
     /**
      * Methode om dagomzet uit te rekenen
@@ -66,19 +77,22 @@ public class Administratie {
 
         // Itereer per dag in de week
         for(int i = 0; i < DAYS_IN_WEEK; i++) {
-            // j is het weeknummer
+            // Counter voor weeknummers
             int j = 0;
 
-            // ga door zo lang dag (dag) in week (j) beschikbaar is
-            int dag = i + DAYS_IN_WEEK * j;
+            // ga door zo lang de dag in de omzet array zit
+            int dag = i;
             while (dag < omzet.length) {
                 // Als die dag dus kennelijk bestaat, voeg de omzet van die dag toe aan de overeenkomende index van onze dagOmzetten
 
                 // Voeg omzet van dag toe aan huidige dag in array
                 dagOmzetten[i] += omzet[dag];
 
-                // Ga naar volgende week (was het maar zo makkelijk in het echt!)
+                // Verhoog de teller
                 j++;
+
+                // Ga naar volgende week
+                dag = i + DAYS_IN_WEEK * j;
             }
         }
 
