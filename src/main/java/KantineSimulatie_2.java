@@ -101,11 +101,36 @@ public class KantineSimulatie_2 {
         // for lus voor dagen
         for(int i = 0; i < dagen; i++) {
 
+            ArrayList<Persoon> personen = new ArrayList<>();
+
             // bedenk hoeveel personen vandaag binnen lopen
-            int aantalpersonen = getRandomValue(MIN_PERSONEN_PER_DAG, MAX_PERSONEN_PER_DAG);
+            final int aantalStudenten = 89;
+            final int aantalDocenten = 10;
+
+            // Maak Personen
+            for (int s=0;s<aantalStudenten;s++) {
+                personen.add(new Student());
+            }
+
+            for (int d=0;d<aantalDocenten;d++) {
+                personen.add(new Docent());
+            }
+
+            personen.add(new KantineMedewerker("0987654321", "KAREL", "KAUWEBLOEM", new Datum(4,11,1999), 'V', 316, false));
 
             // laat de personen maar komen...
-            for (int j = 0; j < aantalpersonen; j++) {
+            //for (int j = 0; j < personen.size(); j++) {
+            for (Persoon persoon : personen) {
+
+                if (persoon instanceof Student) {
+                   System.out.println(((Student)persoon).toString());
+                }
+                if (persoon instanceof Docent) {
+                    System.out.println(((Docent)persoon).toString());
+                }
+                if (persoon instanceof KantineMedewerker) {
+                    System.out.println(((KantineMedewerker)persoon).toString());
+                }
 
                 // en bedenk hoeveel artikelen worden gepakt
                 int aantalartikelen = getRandomValue(MIN_ARTIKELEN_PER_PERSOON, MAX_ARTIKELEN_PER_PERSOON);
@@ -127,6 +152,10 @@ public class KantineSimulatie_2 {
             // druk de dagtotalen af en hoeveel personen binnen zijn gekomen
             System.out.println("Aantal artikelen: " + kantine.getKassa().aantalArtikelen() +
                     "\nHoeveelheid geld in de kassa: " + kantine.getKassa().hoeveelheidGeldInKassa());
+            // Roept de drie methodes aan van Administratie: gemiddelde van ???, gemiddelde omzet en de "dagtotalen"
+            System.out.println("Gemiddelde: " + Administratie.berekenGemiddeldAantal(???));
+            Administratie.berekenGemiddeldeOmzet(???);
+            Administratie.berekenDagOmzet(???);
             // reset de kassa voor de volgende dag
             kantine.getKassa().resetKassa();
         }
