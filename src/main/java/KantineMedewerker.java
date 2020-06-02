@@ -17,11 +17,21 @@ public class KantineMedewerker extends Persoon {
         this.medewerkersnummer = medewerkersnummer;
     }
 
-    public boolean isMagAchterKassaWerken() {
+    public boolean getMagAchterKassaWerken() {
         return magAchterKassaWerken;
     }
 
     public void setMagAchterKassaWerken(boolean magAchterKassaWerken) {
         this.magAchterKassaWerken = magAchterKassaWerken;
+    }
+
+    /**
+     * Methode welke alle velden afdrukt
+     * @return alle velden
+     */
+    @Override
+    public String toString(){
+        return super.toString() + "Medewerkersnummer: " + getMedewerkersnummer() + "\n"
+                + "Mag achter de kasse werken: " + getMagAchterKassaWerken();
     }
 }

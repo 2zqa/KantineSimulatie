@@ -30,4 +30,13 @@ public class Docent extends Persoon{
     public void setAfdeling(String afdeling) {
         this.afdeling = afdeling;
     }
+
+    /**
+     * Methode welke alle velden afdrukt
+     * @return alle velden
+     */
+    @Override
+    public String toString(){
+        return super.toString() + "Afkorting: " + getAfkorting() + "\n" + "Afdeling: " + getAfdeling();
+    }
 }
