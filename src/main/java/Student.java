@@ -8,6 +8,13 @@ public class Student extends Persoon {
         this.studierichting = studierichting;
     }
 
+    /**
+     * Lege constructor
+     */
+    public Student() {
+        super();
+    }
+
     public int getStudentnummer() {
         return studentnummer;
     }

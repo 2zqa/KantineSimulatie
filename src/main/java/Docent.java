@@ -8,6 +8,13 @@ public class Docent extends Persoon{
         this.afdeling = afdeling;
     }
 
+    /**
+     * Lege constructor
+     */
+    public Docent() {
+        super();
+    }
+
     public String getAfkorting() {
         return afkorting;
     }
