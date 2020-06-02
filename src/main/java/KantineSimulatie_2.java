@@ -104,32 +104,26 @@ public class KantineSimulatie_2 {
             ArrayList<Persoon> personen = new ArrayList<>();
 
             // bedenk hoeveel personen vandaag binnen lopen
-            final int aantalStudenten = 89;
-            final int aantalDocenten = 10;
 
-            // Maak Personen
-            for (int s=0;s<aantalStudenten;s++) {
-                personen.add(new Student());
-            }
-
-            for (int d=0;d<aantalDocenten;d++) {
-                personen.add(new Docent());
-            }
-
-            personen.add(new KantineMedewerker("0987654321", "KAREL", "KAUWEBLOEM", new Datum(4,11,1999), 'V', 316, false));
+            // Bepaal hoeveel personen binnen mogen komen
+            int aantalpersonen = getRandomValue(MIN_PERSONEN_PER_DAG, MAX_PERSONEN_PER_DAG);
 
             // laat de personen maar komen...
-            //for (int j = 0; j < personen.size(); j++) {
-            for (Persoon persoon : personen) {
-
-                if (persoon instanceof Student) {
-                   System.out.println(((Student)persoon).toString());
-                }
-                if (persoon instanceof Docent) {
-                    System.out.println(((Docent)persoon).toString());
-                }
-                if (persoon instanceof KantineMedewerker) {
-                    System.out.println(((KantineMedewerker)persoon).toString());
+            // Kan naar switch geconverteerd worden :)
+            for (int j = 0; j < aantalpersonen; j++) {
+                int kans = random.nextInt(100);
+                if (kans > 0 && kans < 89) {
+                    Student student = new Student();
+                    personen.add(student);
+                    System.out.println(student.toString());
+                } else if (kans == 90) {
+                    KantineMedewerker kantineMedewerker = new KantineMedewerker();
+                    personen.add(kantineMedewerker);
+                    System.out.println(kantineMedewerker.toString());
+                } else {
+                    Docent docent = new Docent();
+                    personen.add(docent);
+                    System.out.println(docent.toString());
                 }
 
                 // en bedenk hoeveel artikelen worden gepakt
