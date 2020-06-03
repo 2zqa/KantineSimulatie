@@ -164,9 +164,9 @@ public class KantineSimulatie_2 {
         System.out.println("\n---------- Statistiek -----------");
 
         // debug
-        for(int getal : aantalArtikelen) {
-            System.out.println(getal);
-        }
+//        for(int getal : aantalArtikelen) {
+//            System.out.println(getal);
+//        }
 
 
 
