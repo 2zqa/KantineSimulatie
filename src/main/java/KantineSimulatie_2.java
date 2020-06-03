@@ -97,7 +97,10 @@ public class KantineSimulatie_2 {
      *
      * @param dagen in het verloop van de kantine
      */
-    public void simuleer(int dagen) {
+    public void simuleer(int dagen, int aantalMensen) {
+        // Maak een lijst voor winst en voor prijzen
+        double[] omzet = new double[dagen];
+        int[] aantalArtikelen = new int[aantalMensen];
         // for lus voor dagen
         for(int i = 0; i < dagen; i++) {
 
@@ -108,22 +111,23 @@ public class KantineSimulatie_2 {
             // Bepaal hoeveel personen binnen mogen komen
             int aantalpersonen = getRandomValue(MIN_PERSONEN_PER_DAG, MAX_PERSONEN_PER_DAG);
 
+
+
             // laat de personen maar komen...
-            // Kan naar switch geconverteerd worden :)
             for (int j = 0; j < aantalpersonen; j++) {
-                int kans = random.nextInt(100);
-                if (kans > 0 && kans < 89) {
+                int kans = random.nextInt(aantalMensen);
+                if (kans < 89) {
                     Student student = new Student();
                     personen.add(student);
-                    System.out.println(student.toString());
+                    //System.out.println(student.toString());
                 } else if (kans == 90) {
                     KantineMedewerker kantineMedewerker = new KantineMedewerker();
                     personen.add(kantineMedewerker);
-                    System.out.println(kantineMedewerker.toString());
+                    //System.out.println(kantineMedewerker.toString());
                 } else {
                     Docent docent = new Docent();
                     personen.add(docent);
-                    System.out.println(docent.toString());
+                    //System.out.println(docent.toString());
                 }
 
                 // en bedenk hoeveel artikelen worden gepakt
@@ -139,19 +143,44 @@ public class KantineSimulatie_2 {
                 // loop de kantine binnen, pak de gewenste artikelen, sluit aan
                 Dienblad dienblad = new Dienblad();
                 kantine.loopPakSluitAan(dienblad, artikelnamen, artikelprijzen);
+
+                System.out.println("getalletje j: "+ j);
+                aantalArtikelen[j] = aantalartikelen;
             }
 
             // verwerk rij voor de kassa
             kantine.verwerkRijVoorKassa();
             // druk de dagtotalen af en hoeveel personen binnen zijn gekomen
-            System.out.println("Aantal artikelen: " + kantine.getKassa().aantalArtikelen() +
+            System.out.println("Aantal artikelen vandaag verkocht: " + kantine.getKassa().aantalArtikelen() +
                     "\nHoeveelheid geld in de kassa: " + kantine.getKassa().hoeveelheidGeldInKassa());
-            // Roept de drie methodes aan van Administratie: gemiddelde van ???, gemiddelde omzet en de "dagtotalen"
-            System.out.println("Gemiddelde: " + Administratie.berekenGemiddeldAantal(???));
-            Administratie.berekenGemiddeldeOmzet(???);
-            Administratie.berekenDagOmzet(???);
+            // Voeg geld toe aan totaalwinst in deze dag (deze loop gaat per persoon)
+            omzet[i] += kantine.getKassa().hoeveelheidGeldInKassa();
+
+
             // reset de kassa voor de volgende dag
             kantine.getKassa().resetKassa();
         }
+        // Na de for-loop: print wat statistieken
+        System.out.println("\n---------- Statistiek -----------");
+
+        // debug
+        for(int getal : aantalArtikelen) {
+            System.out.println(getal);
+        }
+
+
+
+        System.out.println("Gemiddelde aantal artikelen per persoon: " + Administratie.berekenGemiddeldAantal(aantalArtikelen));
+        System.out.println("Gemiddelde omzet: " + Administratie.berekenGemiddeldeOmzet(omzet));
+        double[] dagOmzetten = Administratie.berekenDagOmzet(omzet);
+        for(int i=0; i<dagOmzetten.length;i++) {
+            System.out.println("Totaalwinst van alle " +(i+1) + "ste dagen van de week: " + dagOmzetten[i]);
+        }
+        System.out.println("\naantal dagen gesimuleerd: " + dagen);
+    }
+
+    public static void main(String[] args) {
+        KantineSimulatie_2 sim = new KantineSimulatie_2();
+        sim.simuleer(30, 100);
     }
 }
