@@ -18,4 +18,10 @@
     f) Ja, omdat een interface abstract is. Er kunnen geen nieuwe instanties van worden aangemaakt
     g) Ja, zo is dat gedefinieerd.
     h) ?
+4.4
+    a) Ja, omdat het dan gebruikt wordt om te extenden en niet om de klasse zelf te gebruiken
+    b) Ja, omdat Java dit vereist bij abstracte klassen
+    c) Ja, de methodes implementeren uit de interface of de methodes uit de interface verwijderen
+    d) Omdat een instantie variabele dan niet aangemaakt en veranderd kan worden
+    e) final maakt een methode onuitbreidbaar, het kan niet overschreven worden. Wat bij abstracte methode ervoor zorgt dat deze niet gebruikt kunnen worden
 
