@@ -23,9 +23,17 @@ public class Kassa {
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
         double totaalPrijs = getTotaalPrijsOpDienblad(klant);
 
-        // Tel aantal producten en de totaalprijs toe op bij klassenvelden
-        totaalAantalVerkochteArtikelen += aantalArtikelen;
-        totaalHoeveelheidGeld += totaalPrijs;
+        // Probeer het geld van de klant af te schrijven.
+        Betaalwijze betaalwijze = klant.getKlant().getBetaalwijze();
+        boolean betaald = betaalwijze.betaal(totaalPrijs);
+
+        if (betaald) {
+            // Tel aantal producten en de totaalprijs toe op bij klassenvelden
+            totaalAantalVerkochteArtikelen += aantalArtikelen;
+            totaalHoeveelheidGeld += totaalPrijs;
+        } else {
+            System.out.println("Klant heeft niet genoeg geld!");
+        }
     }
 
     /**

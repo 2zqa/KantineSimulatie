@@ -10,6 +10,7 @@ public class Persoon {
     private String achternaam;
     private Datum geboortedatum;
     private char geslacht;
+    private Betaalwijze betaalwijze;
 
     /**
      * Constructor van de klasse Persoon
@@ -140,6 +141,14 @@ public class Persoon {
             System.out.println("Ongeldig geslacht, enkel man 'M' of vrouw 'V' mogelijk");
             return false;
         }
+    }
+
+    public Betaalwijze getBetaalwijze() {
+        return betaalwijze;
+    }
+
+    public void setBetaalwijze(Betaalwijze betaalwijze) {
+        this.betaalwijze = betaalwijze;
     }
 
     /**

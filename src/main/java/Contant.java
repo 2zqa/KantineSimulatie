@@ -3,7 +3,11 @@ public class Contant extends Betaalwijze {
      * Methode om betaling af te handelen
      */
     public boolean betaal(double tebetalen) {
-        // method body omitted
-        return false; // marijns placeholder om het project te laten compileren!
+        if (saldo > tebetalen) {
+            return false;
+        } else {
+            setSaldo(saldo - tebetalen);
+            return true;
+        }
     }
 }
