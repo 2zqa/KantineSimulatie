@@ -26,7 +26,6 @@ public class Kassa {
         // Tel aantal producten en de totaalprijs toe op bij klassenvelden
         totaalAantalVerkochteArtikelen += aantalArtikelen;
         totaalHoeveelheidGeld += totaalPrijs;
-
     }
 
     /**
@@ -87,6 +86,4 @@ public class Kassa {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
     }
-
-
 }

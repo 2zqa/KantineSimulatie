@@ -9,3 +9,13 @@
        kan deze dus niet aangeroepen worden.
     h) Een statische methode kan niet niet-statische velden ophalen zonder eerst de klasse waar dat veld in staat te initialiseren.
     i) Nu is het geen constante meer.
+4.3
+    a) Nee, omdat een interface abstract en dan kunnen geen nieuwe instantie worden aangemaakt
+    b) Nee, omdat het abstract is
+    c) Nee
+    d) Ja
+    e) Ja
+    f) Ja, omdat een interface abstract is. Er kunnen geen nieuwe instanties van worden aangemaakt
+    g) Ja, zo is dat gedefinieerd.
+    h) ?
+
