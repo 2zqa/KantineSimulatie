@@ -23,6 +23,20 @@ public class Kassa {
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
         double totaalPrijs = getTotaalPrijsOpDienblad(klant);
 
+        if(klant.getKlant() instanceof KortingskaartHouder) {
+            KortingskaartHouder kortinghouder = (KortingskaartHouder) klant.getKlant();
+            double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * totaalPrijs;
+            double korting = totaalPrijs - prijsMetKorting;
+            if(kortinghouder.heeftMaximum()){
+                if(korting <= kortinghouder.geefMaximum()){
+                    totaalPrijs = prijsMetKorting;
+                }else{
+                    totaalPrijs -= 1;
+                }
+            }else{
+                totaalPrijs = prijsMetKorting;
+            }
+        }
 
         // Probeer het geld van de klant af te schrijven.
         Betaalwijze betaalwijze = klant.getKlant().getBetaalwijze();
