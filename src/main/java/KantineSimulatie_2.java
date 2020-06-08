@@ -141,10 +141,9 @@ public class KantineSimulatie_2 {
 
                 // maak persoon en dienblad aan, koppel ze
                 // loop de kantine binnen, pak de gewenste artikelen, sluit aan
-                Dienblad dienblad = new Dienblad();
+                Dienblad dienblad = new Dienblad(personen.get(j));
                 kantine.loopPakSluitAan(dienblad, artikelnamen, artikelprijzen);
 
-                System.out.println("getalletje j: "+ j);
                 aantalArtikelen[j] = aantalartikelen;
             }
 

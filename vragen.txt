@@ -18,9 +18,10 @@
     e) Ja
     f) Ja, omdat een interface abstract is. Er kunnen geen nieuwe instanties van worden aangemaakt
     g) Ja, zo is dat gedefinieerd.
-    h) ?
-4.4
-    a) Ja, omdat het dan gebruikt wordt om te extenden en niet om de klasse zelf te gebruiken
+    h) Met polymorfisme wordt bedoeld dat het dynamische type van een variabele ook een kind-klasse mag zijn
+       van het statische type. Bijvoorbeeld: `Vijand persoon = new Zombie();`, waar Vijand de abstracte ouder-klasse is en Zombie de kind-klasse.
+       Een voorbeeld met interfaces: Een klasse die een interface implementeert, dan is die klasse ook een instanceof de interface.
+4.4 a) Ja, omdat het dan gebruikt wordt om te extenden en niet om de klasse zelf te gebruiken
     b) Ja, omdat Java dit vereist bij abstracte klassen
     c) Ja, de methodes implementeren uit de interface of de methodes uit de interface verwijderen
     d) Omdat een instantie variabele dan niet aangemaakt en veranderd kan worden
