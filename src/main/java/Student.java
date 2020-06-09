@@ -37,7 +37,7 @@ public class Student extends Persoon {
      */
     @Override
     public String toString(){
-        return super.toString() + "Studentnummer: " + getStudentnummer() + "\n" + "Studierichting: " + getStudierichting();
+        return super.toString() + "\nStudentnummer: " + getStudentnummer() + "\n" + "Studierichting: " + getStudierichting();
     }
 }
 

@@ -35,7 +35,7 @@ public class KantineMedewerker extends Persoon implements KortingskaartHouder {
      */
     @Override
     public String toString(){
-        return super.toString() + "Medewerkersnummer: " + getMedewerkersnummer() + "\n"
+        return super.toString() + "\nMedewerkersnummer: " + getMedewerkersnummer() + "\n"
                 + "Mag achter de kasse werken: " + getMagAchterKassaWerken();
     }
 

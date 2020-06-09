@@ -37,7 +37,7 @@ public class Docent extends Persoon implements KortingskaartHouder {
      */
     @Override
     public String toString(){
-        return super.toString() + "Afkorting: " + getAfkorting() + "\n" + "Afdeling: " + getAfdeling();
+        return super.toString() + "\nAfkorting: " + getAfkorting() + "\n" + "Afdeling: " + getAfdeling();
     }
 
     /**

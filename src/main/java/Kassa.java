@@ -19,28 +19,36 @@ public class Kassa {
      *
      * @param klant die moet afrekenen
      */
-    public void rekenAf(Dienblad klant) throws TeWeinigGeldException {
+    public void rekenAf(Dienblad klant) {
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
         double totaalPrijs = getTotaalPrijsOpDienblad(klant);
 
-        if(klant.getKlant() instanceof KortingskaartHouder) {
+        if (klant.getKlant() instanceof KortingskaartHouder) {
             KortingskaartHouder kortinghouder = (KortingskaartHouder) klant.getKlant();
             double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * totaalPrijs;
             double korting = totaalPrijs - prijsMetKorting;
-            if(kortinghouder.heeftMaximum()){
-                if(korting <= kortinghouder.geefMaximum()){
-                    totaalPrijs = prijsMetKorting;
-                }else{
-                    totaalPrijs -= 1;
-                }
-            }else{
+
+            // Als de kortinghouder een limiet op zijn korting heeft én
+            // de korting boven die limiet uitkomt, betaal gelimiteerd uit.
+            // Betaal anders regulier uit.
+            if (kortinghouder.heeftMaximum() && korting > kortinghouder.geefMaximum()) {
+                totaalPrijs -= kortinghouder.geefMaximum();
+            } else {
                 totaalPrijs = prijsMetKorting;
             }
         }
 
         // Probeer het geld van de klant af te schrijven.
         Betaalwijze betaalwijze = klant.getKlant().getBetaalwijze();
-        betaalwijze.betaal(totaalPrijs); // Hier kan een exceptie uitkomen
+
+        // Probeer te betalen
+        try {
+            betaalwijze.betaal(totaalPrijs);
+        } catch (TeWeinigGeldException e) {
+            Persoon schuldige = klant.getKlant();
+            double schuld = totaalPrijs - betaalwijze.saldo;
+            System.out.println("OPGELET! Individu \"" + schuldige.getVoornaam() + " " + schuldige.getAchternaam() + "\" kon zijn rekening niet betalen: " + e.getMessage());
+        }
 
         // Als we hier aankomen, dan is er geen exceptie gekomen in de betaal-methode
 

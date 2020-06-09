@@ -20,7 +20,7 @@ public class Kantine {
      * @param artikelprijzen
      */
     public void loopPakSluitAan(Dienblad dienblad, String[] artikelnamen, double[] artikelprijzen) {
-        Persoon persoon = new Persoon();
+        Persoon persoon = dienblad.getKlant();
         dienblad.setKlant(persoon);
 
         for(int i=0; i<artikelnamen.length;i++) {

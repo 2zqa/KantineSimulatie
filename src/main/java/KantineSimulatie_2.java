@@ -97,79 +97,73 @@ public class KantineSimulatie_2 {
      *
      * @param dagen in het verloop van de kantine
      */
-    public void simuleer(int dagen, int aantalMensen) {
-        // Maak een lijst voor winst en voor prijzen
+    public void simuleer(int dagen) {
+        // Voor de statistiek: Maak een lijst voor omzet en aantal verkochte artikelen per dag
         double[] omzet = new double[dagen];
-        int[] aantalArtikelen = new int[aantalMensen];
+        int[] aantalArtikelenPerDag = new int[dagen];
+
         // for lus voor dagen
         for(int i = 0; i < dagen; i++) {
+            System.out.println("Dag " + (i+1));
 
             ArrayList<Persoon> personen = new ArrayList<>();
 
-            // bedenk hoeveel personen vandaag binnen lopen
-
-            // Bepaal hoeveel personen binnen mogen komen
+            // Stap 1. Bepaal hoeveel personen vandaag binnenkomen
             int aantalpersonen = getRandomValue(MIN_PERSONEN_PER_DAG, MAX_PERSONEN_PER_DAG);
 
-
-
-            // laat de personen maar komen...
+            // Stap 2. laat de personen maar komen...
             for (int j = 0; j < aantalpersonen; j++) {
-                int kans = random.nextInt(aantalMensen);
-                if (kans < 89) {
+                // Stap 2.1. Maak persoon
+                int kans = random.nextInt(101); // random integer van 0 tot en met 100
+                if (kans <= 89) { // 89/100e kans
                     Student student = new Student();
                     personen.add(student);
-                    //System.out.println(student.toString());
-                } else if (kans == 90) {
+                } else if (kans == 90) { // 1/100e kans
                     KantineMedewerker kantineMedewerker = new KantineMedewerker();
                     personen.add(kantineMedewerker);
-                    //System.out.println(kantineMedewerker.toString());
-                } else {
+                } else { // (100-1-89)/100e kans, ofwel 10/100e kans, ofwel 1/10e kans
                     Docent docent = new Docent();
                     personen.add(docent);
-                    //System.out.println(docent.toString());
                 }
 
-                // en bedenk hoeveel artikelen worden gepakt
+                // Stap 2.2. Geef dit nieuwe persoon wat geld
+                Persoon netAangemaaktePersoon = personen.get(j);
+                // Maak portemonnee en geef het aan persoon
+                Pinpas portemonnee = new Pinpas();
+                portemonnee.setSaldo(getRandomValue(4, 50));
+                portemonnee.setKredietLimiet(getRandomValue(4, 50));
+                netAangemaaktePersoon.setBetaalwijze(portemonnee);
+
+                // Stap 2.3. Bepaal hoeveel artikelen worden gepakt
                 int aantalartikelen = getRandomValue(MIN_ARTIKELEN_PER_PERSOON, MAX_ARTIKELEN_PER_PERSOON);
 
-                // genereer de "artikelnummers", dit zijn indexen van de artikelnamen
+                // Stap 2.4. genereer de "artikelnummers", dit zijn indexen van de artikelnamen
+                // Ofwel: kies een willekeurig artikel uit de schappen
                 int[] tepakken = getRandomArray(aantalartikelen, 0, AANTAL_ARTIKELEN-1);
-
                 // vind de artikelnamen op basis van de indexen hierboven
                 String[] artikelen = geefArtikelNamen(tepakken);
 
-                // maak persoon en dienblad aan, koppel ze
-                // loop de kantine binnen, pak de gewenste artikelen, sluit aan
-                Dienblad dienblad = new Dienblad(personen.get(j));
+                // Stap 2.5. Persoon gaat in de rij staan met artikelen
+                Dienblad dienblad = new Dienblad(netAangemaaktePersoon);
                 kantine.loopPakSluitAan(dienblad, artikelnamen, artikelprijzen);
-
-                aantalArtikelen[j] = aantalartikelen;
             }
 
-            // verwerk rij voor de kassa
+            // Stap 3. verwerk rij voor de kassa
             kantine.verwerkRijVoorKassa();
-            // druk de dagtotalen af en hoeveel personen binnen zijn gekomen
+            // Druk per dag de winst en hoeveel personen binnen zijn gekomen af
             System.out.println("Aantal artikelen vandaag verkocht: " + kantine.getKassa().aantalArtikelen() +
-                    "\nHoeveelheid geld in de kassa: " + kantine.getKassa().hoeveelheidGeldInKassa());
-            // Voeg geld toe aan totaalwinst in deze dag (deze loop gaat per persoon)
+                    "\nHoeveelheid geld in de kassa: " + kantine.getKassa().hoeveelheidGeldInKassa() + "\n");
+            // Voor de statistiek: Voeg geld toe aan totaalwinst in deze dag (deze loop gaat per persoon)
             omzet[i] += kantine.getKassa().hoeveelheidGeldInKassa();
+            aantalArtikelenPerDag[i] += kantine.getKassa().aantalArtikelen();
 
-
-            // reset de kassa voor de volgende dag
+            // Stap 4. (Laatste stap) reset de kassa voor de volgende dag
             kantine.getKassa().resetKassa();
         }
         // Na de for-loop: print wat statistieken
         System.out.println("\n---------- Statistiek -----------");
 
-        // debug
-//        for(int getal : aantalArtikelen) {
-//            System.out.println(getal);
-//        }
-
-
-
-        System.out.println("Gemiddelde aantal artikelen per persoon: " + Administratie.berekenGemiddeldAantal(aantalArtikelen));
+        System.out.println("Gemiddelde aantal artikelen per dag: " + Administratie.berekenGemiddeldAantal(aantalArtikelenPerDag));
         System.out.println("Gemiddelde omzet: " + Administratie.berekenGemiddeldeOmzet(omzet));
         double[] dagOmzetten = Administratie.berekenDagOmzet(omzet);
         for(int i=0; i<dagOmzetten.length;i++) {
@@ -180,6 +174,6 @@ public class KantineSimulatie_2 {
 
     public static void main(String[] args) {
         KantineSimulatie_2 sim = new KantineSimulatie_2();
-        sim.simuleer(30, 100);
+        sim.simuleer(30);
     }
 }
