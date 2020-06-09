@@ -130,8 +130,8 @@ public class KantineSimulatie_2 {
                 Persoon netAangemaaktePersoon = personen.get(j);
                 // Maak portemonnee en geef het aan persoon
                 Pinpas portemonnee = new Pinpas();
-                portemonnee.setSaldo(getRandomValue(4, 50));
-                portemonnee.setKredietLimiet(getRandomValue(4, 50));
+                portemonnee.setSaldo(getRandomValue(-5, 20));
+                portemonnee.setKredietLimiet(getRandomValue(-20, 0));
                 netAangemaaktePersoon.setBetaalwijze(portemonnee);
 
                 // Stap 2.3. Bepaal hoeveel artikelen worden gepakt
