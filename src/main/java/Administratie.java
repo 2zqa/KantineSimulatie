@@ -77,22 +77,12 @@ public class Administratie {
 
         // Itereer per dag in de week
         for(int i = 0; i < DAYS_IN_WEEK; i++) {
-            // Counter voor weeknummers
-            int j = 0;
-
-            // ga door zo lang de dag in de omzet array zit
-            int dag = i;
-            while (dag < omzet.length) {
-                // Als die dag dus kennelijk bestaat, voeg de omzet van die dag toe aan de overeenkomende index van onze dagOmzetten
-
-                // Voeg omzet van dag toe aan huidige dag in array
-                dagOmzetten[i] += omzet[dag];
-
-                // Verhoog de teller
+            int j=0;
+            // i is de dagnummer, j is het weeknummer
+            while (i + DAYS_IN_WEEK * j < omzet.length) {
+                dagOmzetten[i] += omzet[i + DAYS_IN_WEEK * j];
                 j++;
 
-                // Ga naar volgende week
-                dag = i + DAYS_IN_WEEK * j;
             }
         }
 
