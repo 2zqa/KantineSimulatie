@@ -56,23 +56,24 @@ public class Kassa {
             }
         }
 
-        // Probeer het geld van de klant af te schrijven.
+        // Sla betaalwijze op
         Betaalwijze betaalwijze = klant.getKlant().getBetaalwijze();
 
         // Probeer te betalen
         try {
             betaalwijze.betaal(totaalPrijs);
+
+            // Tel aantal producten en de totaalprijs toe op bij klassenvelden.
+            // N.B. Dit gebeurt niet als de betaling hierboven niet gelukt is, omdat de foutmelding de uitvoering stopt.
+            totaalAantalVerkochteArtikelen += aantalArtikelen;
+            totaalHoeveelheidGeld += totaalPrijs;
         } catch (TeWeinigGeldException e) {
             Persoon schuldige = klant.getKlant();
             double schuld = totaalPrijs - betaalwijze.saldo;
             System.out.println("OPGELET! Individu \"" + schuldige.getVoornaam() + " " + schuldige.getAchternaam() + "\" kon zijn rekening niet betalen: " + e.getMessage());
         }
 
-        // Als we hier aankomen, dan is er geen exceptie gekomen in de betaal-methode
 
-        // Tel aantal producten en de totaalprijs toe op bij klassenvelden
-        totaalAantalVerkochteArtikelen += aantalArtikelen;
-        totaalHoeveelheidGeld += totaalPrijs;
     }
 
     /**
