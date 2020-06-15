@@ -2,11 +2,14 @@
 <persistence version="2.0"
     xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-    <persistence-unit name="KantineSimulatie">
-        <class>Factuur</class>
+    <persistence-unit name="JPAVoorbeeld">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>nl.hanze.jpa.Student</class>
+        <class>nl.hanze.jpa.StudieInschrijving</class>
+        <class>nl.hanze.jpa.Telefoon</class>
         <properties>
             <!-- The JDBC driver of your database -->
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <!--property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /-->
 
             <!-- PostgreSQL JDBC driver example -->
             <!--
@@ -19,18 +22,18 @@
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
             -->
 
-            <!-- The JDBC URL to the database instance -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/kantine?serverTimezone=EST" />
+            <!-- MySQL JDBC URL to the database instance -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpavoorbeeld?serverTimezone=EST" />
 
             <!-- PostgreSQL JDBC connection url example -->
             <!--
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.172.60.91:5432/kantine" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/jpavoorbeeld" />
             -->
 
             <!-- SQLite3 JDBC connection url example -->
             <!-- On file -->
             <!--
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:kantine.db"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:jpavoorbeeld.db"/>
             -->
             <!-- Or in memory -->
             <!--

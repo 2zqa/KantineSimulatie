@@ -13,3 +13,6 @@ target/
 # macOS junk
 .DS_Store
 Thumbs.db
+
+# Persistence with passwords, please provide your own. See preset-file                                                  
+src/main/resources/META-INF/persistence.xml
