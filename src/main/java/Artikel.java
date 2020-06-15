@@ -7,6 +7,7 @@
 public class Artikel {
     private String naam;
     private double prijs;
+    private double korting;
 
     /**
      * Constructor van de klasse Artikel
@@ -17,6 +18,13 @@ public class Artikel {
     public Artikel(String naam, double prijs) {
         this.naam = naam;
         this.prijs = prijs;
+        korting = 0;
+    }
+
+    public Artikel(String naam, double prijs, double korting) {
+        this.naam = naam;
+        this.prijs = prijs;
+        korting = 0;
     }
 
     /**
@@ -69,5 +77,13 @@ public class Artikel {
     @Override
     public String toString(){
         return "Naam: " + getNaam() + "\n" + "Prijs: " + getPrijs();
+    }
+
+    public double getKorting() {
+        return korting;
+    }
+
+    public void setKorting(double korting) {
+        this.korting = korting;
     }
 }
