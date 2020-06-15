@@ -1,6 +1,14 @@
 import java.util.*;
+import javax.persistence.Persistence;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 public class KantineSimulatie_2 {
+
+    // Database-velden
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
+            Persistence.createEntityManagerFactory("KantineSimulatie");
+    private EntityManager manager;
 
     // kantine
     private Kantine kantine;
@@ -45,6 +53,15 @@ public class KantineSimulatie_2 {
         kantineaanbod = new KantineAanbod(artikelnamen, artikelprijzen, hoeveelheden);
 
         kantine.setKantineaanbod(kantineaanbod);
+    }
+
+    public void runVoorbeeld() {
+        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+        //transactionsomitted
+
+        manager.close();
+        ENTITY_MANAGER_FACTORY.close();
     }
 
     /**

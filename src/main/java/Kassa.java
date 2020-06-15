@@ -1,7 +1,4 @@
 import java.util.Iterator;
-import javax.persistence.Persistence;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 public class Kassa {
     private int totaalAantalVerkochteArtikelen;
@@ -14,21 +11,6 @@ public class Kassa {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
     }
-
-    public class Main{
-        private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
-                Persistence.createEntityManagerFactory("KantineSimulatie");
-        private EntityManager manager;
-
-        public void runVoorbeeld() {
-            manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-
-            //transactionsomitted
-
-            manager.close();
-            ENTITY_MANAGER_FACTORY.close();
-        }
-
 
     /**
      * Vraag het aantal artikelen en de totaalprijs op. Tel deze gegevens op bij de controletotalen
