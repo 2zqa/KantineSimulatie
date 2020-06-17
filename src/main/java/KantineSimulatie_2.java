@@ -5,10 +5,10 @@ import javax.persistence.EntityManagerFactory;
 
 public class KantineSimulatie_2 {
 
-    // Database-velden
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
-            Persistence.createEntityManagerFactory("KantineSimulatie");
-    private EntityManager manager;
+    // Database-velden // TODO: undo comment!
+//    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
+//            Persistence.createEntityManagerFactory("KantineSimulatie");
+//    private EntityManager manager;
 
     // kantine
     private Kantine kantine;
@@ -54,14 +54,62 @@ public class KantineSimulatie_2 {
 
         kantine.setKantineaanbod(kantineaanbod);
     }
+// TODO: uncomment!
+//    public void runVoorbeeld() {
+//        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+//
+//        //transactionsomitted
+//
+//        manager.close();
+//        ENTITY_MANAGER_FACTORY.close();
+//    }
 
-    public void runVoorbeeld() {
-        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+    /**
+     * Genereert arrayList van artikelen
+     * @param artikelnamen namen van artikelen
+     * @param artikelprijzen prijzen van artikelen
+     * @return arraylijst van artikelen
+     */
+    private ArrayList<Artikel> genereerArtikelArray(String[] artikelnamen, double[] artikelprijzen) {
+        // Check of prijzen en artikelnamen array wel zelfde lengte heeft
+        if(artikelnamen.length != artikelprijzen.length) {
+            throw new IllegalArgumentException("arrays moeten zelfde aantal elementen hebben.");
+        }
 
-        //transactionsomitted
+        ArrayList<Artikel> artikelen = new ArrayList<>();
 
-        manager.close();
-        ENTITY_MANAGER_FACTORY.close();
+        // Genereer artikelarray
+        for(int i=0;i<artikelnamen.length;i++) {
+            artikelen.add(new Artikel(artikelnamen[i], artikelprijzen[i]));
+        }
+
+        return artikelen;
+    }
+
+    /**
+     * Stelt korting in op een willekeurig artikel uit de arraylist.
+     *
+     * @param artikelen arraylist van artikelen
+     * @param korting percentage van 0 tot 100 - 0 is geen korting, 100 is 100%.
+     * @return
+     */
+    private ArrayList<Artikel> stelKortingInOpWillekeurigAantalArtikelen(ArrayList<Artikel> artikelen, int korting) {
+        int maxAantalArtikelenMetKorting = random.nextInt(artikelen.size());
+
+        for(int i=0;i<maxAantalArtikelenMetKorting;i++) {
+            // Pak willekeurig artikel uit lijst
+            int artikelIndex = random.nextInt(artikelen.size());
+            Artikel artikel = artikelen.get(artikelIndex);
+
+            // Genereer en stel korting in. bv van 20 moet dit 4 opleveren
+            double artikelPrijsMetKorting = artikel.getPrijs() * (float)((korting)/100); // TODO: dubbelcheck wiskunde -Marijn xd
+            artikel.setKorting(artikelPrijsMetKorting);
+
+            // Vervang oude artikel zónder korting met artikel mét korting
+            artikelen.set(artikelIndex, artikel);
+        }
+
+        return artikelen;
     }
 
     /**
@@ -119,6 +167,9 @@ public class KantineSimulatie_2 {
         double[] omzet = new double[dagen];
         int[] aantalArtikelenPerDag = new int[dagen];
 
+        // Aanbod
+        ArrayList<Artikel> aanbod = genereerArtikelArray(artikelnamen, artikelprijzen);
+
         // for lus voor dagen
         for(int i = 0; i < dagen; i++) {
             System.out.println("Dag " + (i+1));
@@ -127,6 +178,9 @@ public class KantineSimulatie_2 {
 
             // Stap 1. Bepaal hoeveel personen vandaag binnenkomen
             int aantalpersonen = getRandomValue(MIN_PERSONEN_PER_DAG, MAX_PERSONEN_PER_DAG);
+
+            // Stap 2. Stel korting in op willekeurig aantal artikelen
+            ArrayList<Artikel> aanbodMetKorting = stelKortingInOpWillekeurigAantalArtikelen(aanbod, 20);
 
             // Stap 2. laat de personen maar komen...
             for (int j = 0; j < aantalpersonen; j++) {
@@ -154,15 +208,21 @@ public class KantineSimulatie_2 {
                 // Stap 2.3. Bepaal hoeveel artikelen worden gepakt
                 int aantalartikelen = getRandomValue(MIN_ARTIKELEN_PER_PERSOON, MAX_ARTIKELEN_PER_PERSOON);
 
-                // Stap 2.4. genereer de "artikelnummers", dit zijn indexen van de artikelnamen
-                // Ofwel: kies een willekeurig artikel uit de schappen
-                int[] tepakken = getRandomArray(aantalartikelen, 0, AANTAL_ARTIKELEN-1);
-                // vind de artikelnamen op basis van de indexen hierboven
-                String[] artikelen = geefArtikelNamen(tepakken);
-
-                // Stap 2.5. Persoon gaat in de rij staan met artikelen
+                // Stap 2.4. Dienblad wordt gemaakt
                 Dienblad dienblad = new Dienblad(netAangemaaktePersoon);
-                kantine.loopPakSluitAan(dienblad, artikelnamen, artikelprijzen);
+
+                // Stap 2.5. Pak artikelen uit aanbodMetKorting. TODO: gebruik KantineAanbod i.p.v. lokale variabele 'aanbod(MetKorting)'
+                // pak k aantal keer een willekeurig artikel uit array 'aanbodMetKorting' en voeg deze artikelen toe aan artikelenOpDienblad
+                for (int k=0;k<aantalartikelen;k++) {
+                    int artikelIndex = random.nextInt(aanbodMetKorting.size());
+                    Artikel artikel = aanbodMetKorting.get(artikelIndex);
+                    dienblad.voegToe(artikel);
+                }
+
+                // Stap 2.6. Voeg artikelen toe aan dienblad.
+                // Note: loopPakSluitAan is deprecated omdat we nu zelf artikelen toevoegen
+                // aan het dienblad en dan het dienblad zelf aan de kassarij toevoegen
+                kantine.getKassarij().sluitAchteraan(dienblad);
             }
 
             // Stap 3. verwerk rij voor de kassa

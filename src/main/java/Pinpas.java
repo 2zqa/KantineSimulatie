@@ -20,6 +20,7 @@ public class Pinpas extends Betaalwijze {
             throw new TeWeinigGeldException("Kredietlimiet overschreden :(");
         } else {
             // Werk saldo bij
+            // TODO: Fix kredietlimiet?
             saldo -= tebetalen;
         }
     }
