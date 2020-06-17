@@ -23,20 +23,7 @@ public class Kassa {
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
         double totaalPrijs = getTotaalPrijsOpDienblad(klant);
 
-        if (klant.getKlant() instanceof KortingskaartHouder) {
-            KortingskaartHouder kortinghouder = (KortingskaartHouder) klant.getKlant();
-            double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * totaalPrijs;
-            double korting = totaalPrijs - prijsMetKorting;
-
-            // Als de kortinghouder een limiet op zijn korting heeft én
-            // de korting boven die limiet uitkomt, betaal gelimiteerd uit.
-            // Betaal anders regulier uit.
-            if (kortinghouder.heeftMaximum() && korting > kortinghouder.geefMaximum()) {
-                totaalPrijs -= kortinghouder.geefMaximum();
-            } else {
-                totaalPrijs = prijsMetKorting;
-            }
-        }
+        // LET OP: Korting wordt nu in getTotaalPrijsOpDienblad berekend!
 
         // Sla betaalwijze op
         Betaalwijze betaalwijze = klant.getKlant().getBetaalwijze();
@@ -78,13 +65,49 @@ public class Kassa {
      *
      * @return De totaalprijs
      */
-    public double getTotaalPrijsOpDienblad(Dienblad klant) {
-        Iterator<Artikel> it = klant.getLijstVanAlleArtikelen();
-        int totaalPrijs = 0;
+    public double getTotaalPrijsOpDienblad(Dienblad dienblad) {
+        Iterator<Artikel> it = dienblad.getLijstVanAlleArtikelen();
+        Persoon klant = dienblad.getKlant();
+
+        double totaalPrijs = 0;
         while (it.hasNext()) {
             Artikel artikel = it.next();
-            totaalPrijs += artikel.getPrijs();
+            double dagAanbiedingKorting = artikel.getKorting();
+            double artikelPrijs = artikel.getPrijs() - dagAanbiedingKorting;
+
+
+            /*
+             NOTE: hieronder is een afweging gemaakt tussen:
+                   dubbele code (van te voren checken of klant instanceof KortingskaartHouder is) en theoretisch betere performance
+                   óf dubbele code voorkomen en een if-statement in de for-loop die steeds hetzelfde teruggeeft.
+                   In dit geval is gekozen om dubbele code te voorkomen ten koste van betere performance.
+
+                   Stackoverflow threads over het probleem:
+                   C++: https://stackoverflow.com/questions/16871471/avoiding-if-statement-inside-a-for-loop
+                   Java: https://stackoverflow.com/questions/12224132/nested-if-statement-in-loop-vs-two-separate-loops
+            */
+
+             // Als klant kortinghouder is én het artikel géén dagaanbieding heeft
+            if(klant instanceof KortingskaartHouder && dagAanbiedingKorting == 0) {
+                KortingskaartHouder kortinghouder = (KortingskaartHouder) klant;
+
+                // Als de kortinghouder een limiet op zijn korting heeft én
+                // de korting boven die limiet uitkomt, betaal gelimiteerd uit.
+                // Betaal anders regulier uit.
+                double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * artikelPrijs;
+                double personeelsKorting = artikelPrijs - prijsMetKorting;
+
+                if (kortinghouder.heeftMaximum() && personeelsKorting > kortinghouder.geefMaximum()) {
+                    artikelPrijs -= kortinghouder.geefMaximum();
+                } else {
+                    // Mijn hersenen zijn numb
+                    artikelPrijs = prijsMetKorting;
+                }
+            }
+
+            totaalPrijs += artikelPrijs;
         }
+
         return totaalPrijs;
     }
 

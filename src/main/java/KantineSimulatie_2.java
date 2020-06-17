@@ -222,7 +222,7 @@ public class KantineSimulatie_2 {
                 // Stap 2.6. Voeg artikelen toe aan dienblad.
                 // Note: loopPakSluitAan is deprecated omdat we nu zelf artikelen toevoegen
                 // aan het dienblad en dan het dienblad zelf aan de kassarij toevoegen
-                kantine.getKassarij().sluitAchteraan(dienblad);
+                kantine.getKassarij().sluitAchteraan(dienblad); // TODO: bekijken of dit in soortgelijke looppaksluitaan methode kan? samen met die k-forloop
             }
 
             // Stap 3. verwerk rij voor de kassa
