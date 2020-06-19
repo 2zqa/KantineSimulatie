@@ -41,8 +41,6 @@ public class Kassa {
             double schuld = totaalPrijs - betaalwijze.saldo;
             System.out.println("OPGELET! Individu \"" + schuldige.getVoornaam() + " " + schuldige.getAchternaam() + "\" kon zijn rekening niet betalen: " + e.getMessage());
         }
-
-
     }
 
     /**
@@ -58,57 +56,6 @@ public class Kassa {
             aantal++;
         }
         return aantal;
-    }
-
-    /**
-     * Methode om de totaalprijs van de artikelen op dienblad uit te rekenen
-     *
-     * @return De totaalprijs
-     */
-    public double getTotaalPrijsOpDienblad(Dienblad dienblad) {
-        Iterator<Artikel> it = dienblad.getLijstVanAlleArtikelen();
-        Persoon klant = dienblad.getKlant();
-
-        double totaalPrijs = 0;
-        while (it.hasNext()) {
-            Artikel artikel = it.next();
-            double dagAanbiedingKorting = artikel.getKorting();
-            double artikelPrijs = artikel.getPrijs() - dagAanbiedingKorting;
-
-
-            /*
-             NOTE: hieronder is een afweging gemaakt tussen:
-                   dubbele code (van te voren checken of klant instanceof KortingskaartHouder is) en theoretisch betere performance
-                   óf dubbele code voorkomen en een if-statement in de for-loop die steeds hetzelfde teruggeeft.
-                   In dit geval is gekozen om dubbele code te voorkomen ten koste van betere performance.
-
-                   Stackoverflow threads over het probleem:
-                   C++: https://stackoverflow.com/questions/16871471/avoiding-if-statement-inside-a-for-loop
-                   Java: https://stackoverflow.com/questions/12224132/nested-if-statement-in-loop-vs-two-separate-loops
-            */
-
-             // Als klant kortinghouder is én het artikel géén dagaanbieding heeft
-            if(klant instanceof KortingskaartHouder && dagAanbiedingKorting == 0) {
-                KortingskaartHouder kortinghouder = (KortingskaartHouder) klant;
-
-                // Als de kortinghouder een limiet op zijn korting heeft én
-                // de korting boven die limiet uitkomt, betaal gelimiteerd uit.
-                // Betaal anders regulier uit.
-                double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * artikelPrijs;
-                double personeelsKorting = artikelPrijs - prijsMetKorting;
-
-                if (kortinghouder.heeftMaximum() && personeelsKorting > kortinghouder.geefMaximum()) {
-                    artikelPrijs -= kortinghouder.geefMaximum();
-                } else {
-                    // Mijn hersenen zijn numb
-                    artikelPrijs = prijsMetKorting;
-                }
-            }
-
-            totaalPrijs += artikelPrijs;
-        }
-
-        return totaalPrijs;
     }
 
     /**
