@@ -46,6 +46,7 @@ public class KantineSimulatie_2 {
      *
      */
     public KantineSimulatie_2() {
+        openManager();
         kantine = new Kantine(manager);
         random = new Random();
         int[] hoeveelheden =
@@ -55,13 +56,19 @@ public class KantineSimulatie_2 {
         kantine.setKantineaanbod(kantineaanbod);
     }
 
-    public void runVoorbeeld() {
-        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+    public static void main(String[] args) {
+        KantineSimulatie_2 sim = new KantineSimulatie_2();
+        sim.simuleer(30);
+        sim.closeManager();
+    }
 
-        //transactionsomitted
-
+    public void closeManager() {
         manager.close();
         ENTITY_MANAGER_FACTORY.close();
+    }
+
+    public void openManager() {
+        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
     }
 
     /**
@@ -247,10 +254,5 @@ public class KantineSimulatie_2 {
             System.out.println("Totaalwinst van alle " +(i+1) + "ste dagen van de week: " + dagOmzetten[i]);
         }
         System.out.println("\naantal dagen gesimuleerd: " + dagen);
-    }
-
-    public static void main(String[] args) {
-        KantineSimulatie_2 sim = new KantineSimulatie_2();
-        sim.simuleer(30);
     }
 }
