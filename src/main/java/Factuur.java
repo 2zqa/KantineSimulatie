@@ -1,10 +1,12 @@
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.time.LocalDateTime;
 
+@Table(name="factuur")
 public class Factuur implements Serializable {
     @Id
     @Column(name= "id", unique = true)

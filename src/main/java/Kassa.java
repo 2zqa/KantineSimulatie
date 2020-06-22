@@ -1,16 +1,19 @@
+import javax.persistence.EntityManager;
 import java.util.Iterator;
 
 public class Kassa {
     private int totaalAantalVerkochteArtikelen;
     private double totaalHoeveelheidGeld;
     private double totaalHoeveelheidKorting;
+    private EntityManager manager;
 
     /**
      * Constructor - stelt de klassevelden in
      */
-    public Kassa(KassaRij kassarij) {
+    public Kassa(KassaRij kassarij, EntityManager manager) {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
+        this.manager = manager;
     }
 
     /**
@@ -34,13 +37,15 @@ public class Kassa {
         // Probeer te betalen
         try {
             betaalwijze.betaal(totaalPrijs);
-
             // Tel aantal producten en de totaalprijs toe op bij klassenvelden.
             // N.B. Dit gebeurt niet als de betaling hierboven niet gelukt is, omdat de foutmelding de uitvoering stopt.
             totaalAantalVerkochteArtikelen += aantalArtikelen;
             totaalHoeveelheidGeld += totaalPrijs;
             totaalHoeveelheidKorting += korting;
             System.out.println(factuur.toString());
+
+            //opslaan van de factuur in de database
+            save(factuur);
         } catch (TeWeinigGeldException e) {
             Persoon schuldige = klant.getKlant();
             double schuld = totaalPrijs - betaalwijze.saldo;
@@ -101,5 +106,17 @@ public class Kassa {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
         totaalHoeveelheidKorting = 0;
+    }
+
+    /**
+     * slaat de factuur op in de database, dit is opgesplits in de onderdelen datum, korting en totaal
+     * @param factuur is de factuur van de klant
+     */
+    public void save(Factuur factuur) {
+        manager.getTransaction().begin();
+        manager.persist(factuur.getDatum());
+        manager.persist(factuur.getKorting());
+        manager.persist(factuur.getTotaal());
+        manager.getTransaction().commit();
     }
 }

@@ -5,10 +5,10 @@ import javax.persistence.EntityManagerFactory;
 
 public class KantineSimulatie_2 {
 
-    // Database-velden // TODO: undo comment!
-//    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
-//            Persistence.createEntityManagerFactory("KantineSimulatie");
-//    private EntityManager manager;
+    // Database-velden
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
+            Persistence.createEntityManagerFactory("KantineSimulatie");
+    private EntityManager manager;
 
     // kantine
     private Kantine kantine;
@@ -46,7 +46,7 @@ public class KantineSimulatie_2 {
      *
      */
     public KantineSimulatie_2() {
-        kantine = new Kantine();
+        kantine = new Kantine(manager);
         random = new Random();
         int[] hoeveelheden =
                 getRandomArray(AANTAL_ARTIKELEN, MIN_ARTIKELEN_PER_SOORT, MAX_ARTIKELEN_PER_SOORT);
@@ -54,15 +54,15 @@ public class KantineSimulatie_2 {
 
         kantine.setKantineaanbod(kantineaanbod);
     }
-// TODO: uncomment!
-//    public void runVoorbeeld() {
-//        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-//
-//        //transactionsomitted
-//
-//        manager.close();
-//        ENTITY_MANAGER_FACTORY.close();
-//    }
+
+    public void runVoorbeeld() {
+        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+        //transactionsomitted
+
+        manager.close();
+        ENTITY_MANAGER_FACTORY.close();
+    }
 
     /**
      * Genereert arrayList van artikelen
