@@ -21,13 +21,7 @@ public class Factuur implements Serializable {
     @Column(name= "totaalprijs", nullable = false)
     private double totaal;
 
-    public Factuur(){
-        totaal = 0;
-        korting = 0;
-    }
-
-    public Factuur(Dienblad klant, LocalDateTime datum){
-        this();
+    public Factuur(Dienblad klant){
         this.datum = LocalDateTime.now();
         verwerkBestelling(klant);
     }
@@ -97,7 +91,7 @@ public class Factuur implements Serializable {
 
     public String getDatum() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        return (datum.format(formatter));
+        return datum.format(formatter);
     }
 
     /**

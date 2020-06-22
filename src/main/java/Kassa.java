@@ -24,8 +24,9 @@ public class Kassa {
      * @param klant die moet afrekenen
      */
     public void rekenAf(Dienblad klant) {
-        Factuur factuur = new Factuur();
+        Factuur factuur = new Factuur(klant);
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
+
         double totaalPrijs = factuur.getTotaal();
         double korting = factuur.getKorting();
 
