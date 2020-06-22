@@ -3,6 +3,7 @@ import java.util.Iterator;
 public class Kassa {
     private int totaalAantalVerkochteArtikelen;
     private double totaalHoeveelheidGeld;
+    private double totaalHoeveelheidKorting;
 
     /**
      * Constructor - stelt de klassevelden in
@@ -20,8 +21,10 @@ public class Kassa {
      * @param klant die moet afrekenen
      */
     public void rekenAf(Dienblad klant) {
+        Factuur factuur = new Factuur();
         int aantalArtikelen = getAantalArtikelenOpDienblad(klant);
-        double totaalPrijs = getTotaalPrijsOpDienblad(klant);
+        double totaalPrijs = factuur.getTotaal();
+        double korting = factuur.getKorting();
 
         // LET OP: Korting wordt nu in getTotaalPrijsOpDienblad berekend!
 
@@ -36,6 +39,8 @@ public class Kassa {
             // N.B. Dit gebeurt niet als de betaling hierboven niet gelukt is, omdat de foutmelding de uitvoering stopt.
             totaalAantalVerkochteArtikelen += aantalArtikelen;
             totaalHoeveelheidGeld += totaalPrijs;
+            totaalHoeveelheidKorting += korting;
+            System.out.println(factuur.toString());
         } catch (TeWeinigGeldException e) {
             Persoon schuldige = klant.getKlant();
             double schuld = totaalPrijs - betaalwijze.saldo;
@@ -79,11 +84,22 @@ public class Kassa {
     }
 
     /**
+     * Geeft het totaalbedrag van alle artikelen die de kass zijn gepasseerd, vanaf het moment dat
+     * de methode resetKassa is aangeroepen.
+     *
+     * @return hoeveelheid geld in de kassa
+     */
+    public double getTotaalHoeveelheidKorting() {
+        return totaalHoeveelheidKorting;
+    }
+
+    /**
      * reset de waarden van het aantal gepasseerde artikelen en de totale hoeveelheid geld in de
      * kassa.
      */
     public void resetKassa() {
         totaalAantalVerkochteArtikelen = 0;
         totaalHoeveelheidGeld = 0;
+        totaalHoeveelheidKorting = 0;
     }
 }

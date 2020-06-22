@@ -5,7 +5,7 @@ public class Pinpas extends Betaalwijze {
     /**
      * Methode om kredietlimiet te zetten
      *
-     * @param kredietlimiet
+     * @param kredietlimiet is het bedrag dat een persoon in het rood kan staan
      */
     public void setKredietLimiet(double kredietlimiet) {
         this.kredietlimiet = kredietlimiet;
@@ -20,7 +20,6 @@ public class Pinpas extends Betaalwijze {
             throw new TeWeinigGeldException("Kredietlimiet overschreden :(");
         } else {
             // Werk saldo bij
-            // TODO: Fix kredietlimiet?
             saldo -= tebetalen;
         }
     }

@@ -1,11 +1,22 @@
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+import java.time.LocalDateTime;
 
 public class Factuur implements Serializable {
+    @Id
+    @Column(name= "id", unique = true)
     private Long id;
-    private LocalDate datum;
+
+    @Column(name= "datum_tijd", nullable = false)
+    private LocalDateTime datum;
+
+    @Column(name= "totale_korting", nullable = false)
     private double korting;
+
+    @Column(name= "totaalprijs", nullable = false)
     private double totaal;
 
     public Factuur(){
@@ -13,10 +24,9 @@ public class Factuur implements Serializable {
         korting = 0;
     }
 
-    public Factuur(Dienblad klant, LocalDate datum){
+    public Factuur(Dienblad klant, LocalDateTime datum){
         this();
-        this.datum = datum;
-
+        this.datum = LocalDateTime.now();
         verwerkBestelling(klant);
     }
 
@@ -26,7 +36,7 @@ public class Factuur implements Serializable {
      * Zet het totaal te betalen bedrag en het
      * totaal aan ontvangen kortingen
      *
-     * @param klant
+     * @param klant is de huidige klant bij de kasse
      */
     private void verwerkBestelling(Dienblad klant){
         Iterator<Artikel> it = klant.getLijstVanAlleArtikelen();
@@ -72,7 +82,7 @@ public class Factuur implements Serializable {
     /**
      * @return het totaalbedrag
      */
-    public double getTotal(){
+    public double getTotaal(){
         return totaal;
     }
 
@@ -83,10 +93,17 @@ public class Factuur implements Serializable {
         return korting;
     }
 
+    public String getDatum() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return (datum.format(formatter));
+    }
+
     /**
      * @return een printbaar bonnetje
      */
+    @Override
     public String toString(){
-       return null;
-    }
+            return ("Datum: " + getDatum() + "\nKorting: " +
+                    getKorting() + "\nTotaalprijs: " + getTotaal());
+        }
 }
