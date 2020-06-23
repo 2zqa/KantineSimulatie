@@ -55,6 +55,13 @@ public class KantineSimulatie_2 {
         kantineaanbod = new KantineAanbod(artikelnamen, artikelprijzen, hoeveelheden);
 
         kantine.setKantineaanbod(kantineaanbod);
+    }
+
+    public void runVoorbeeld() {
+        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+        //transactionsomitted
+
         manager.close();
         ENTITY_MANAGER_FACTORY.close();
     }
@@ -96,8 +103,8 @@ public class KantineSimulatie_2 {
             int artikelIndex = random.nextInt(artikelen.size());
             Artikel artikel = artikelen.get(artikelIndex);
 
-            // Genereer en stel korting in. bv van 20 moet dit 4 opleveren
-            double artikelPrijsMetKorting = artikel.getPrijs() * (float)((korting)/100); // TODO: dubbelcheck wiskunde -Marijn xd
+            // Stel korting in
+            double artikelPrijsMetKorting = artikel.getPrijs() * (float)((korting)/100);
             artikel.setKorting(artikelPrijsMetKorting);
 
             // Vervang oude artikel zónder korting met artikel mét korting
