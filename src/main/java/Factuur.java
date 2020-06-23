@@ -1,14 +1,14 @@
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.time.LocalDateTime;
 
+@Entity
 @Table(name="factuur")
 public class Factuur implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name= "id", unique = true)
     private Long id;
 
