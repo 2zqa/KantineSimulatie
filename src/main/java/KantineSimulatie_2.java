@@ -2,10 +2,11 @@ import java.util.*;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+
 
 public class KantineSimulatie_2 {
-
-    // Database-velden
+    // Create an EntityManagerFactory when you start the application.
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
             Persistence.createEntityManagerFactory("KantineSimulatie");
     private EntityManager manager;
@@ -46,6 +47,7 @@ public class KantineSimulatie_2 {
      *
      */
     public KantineSimulatie_2() {
+        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
         kantine = new Kantine(manager);
         random = new Random();
         int[] hoeveelheden =
@@ -53,13 +55,6 @@ public class KantineSimulatie_2 {
         kantineaanbod = new KantineAanbod(artikelnamen, artikelprijzen, hoeveelheden);
 
         kantine.setKantineaanbod(kantineaanbod);
-    }
-
-    public void runVoorbeeld() {
-        manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-
-        //transactionsomitted
-
         manager.close();
         ENTITY_MANAGER_FACTORY.close();
     }

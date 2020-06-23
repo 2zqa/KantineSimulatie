@@ -1,4 +1,5 @@
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.Iterator;
 
 public class Kassa {
@@ -114,10 +115,22 @@ public class Kassa {
      * @param factuur is de factuur van de klant
      */
     public void save(Factuur factuur) {
-        manager.getTransaction().begin();
-        manager.persist(factuur.getDatum());
-        manager.persist(factuur.getKorting());
-        manager.persist(factuur.getTotaal());
-        manager.getTransaction().commit();
+        EntityTransaction transaction = null;
+        try{
+            // Get a transaction, sla de student gegevens op en commit de transactie
+            transaction = manager.getTransaction();
+            transaction.begin();
+            manager.persist(factuur.getDatum());
+            manager.persist(factuur.getKorting());
+            manager.persist(factuur.getTotaal());
+            transaction.commit();
+        } catch (Exception e) {
+            // If there are any exceptions, roll back the changes
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
     }
 }
