@@ -18,10 +18,10 @@ public class Factuur implements Serializable {
     private LocalDateTime datum;
 
     @Column(name= "totale_korting", nullable = false)
-    private double korting;
+    private double totaalKorting;
 
     @Column(name= "totaalprijs", nullable = false)
-    private double totaal;
+    private double totaalPrijs;
 
     @OneToMany(targetEntity = Factuur.class, mappedBy = "factuur",
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -45,9 +45,9 @@ public class Factuur implements Serializable {
 
         double totaalPrijs = 0;
         while (it.hasNext()) {
-            Artikel artikel = it.next();
-            double dagAanbiedingKorting = artikel.getKorting();
-            double artikelPrijs = artikel.getPrijs() - dagAanbiedingKorting;
+            Artikel artikel = it.next();       
+            double artikelKorting = artikel.getKorting();
+            double artikelPrijs = artikel.getPrijs() - artikelKorting;
             regels.add(new FactuurRegel(this, artikel));
 
             /*
@@ -61,39 +61,40 @@ public class Factuur implements Serializable {
                    Java: https://stackoverflow.com/questions/12224132/nested-if-statement-in-loop-vs-two-separate-loops
             */
 
-            // Als klant kortinghouder is én het artikel géén dagaanbieding heeft
-            if(klant instanceof KortingskaartHouder && dagAanbiedingKorting == 0) {
+            // Als klant kortinghouder is én het artikel géén dagaanbieding/korting heeft
+            if(klant instanceof KortingskaartHouder && artikelKorting == 0) {
                 KortingskaartHouder kortinghouder = (KortingskaartHouder) klant;
 
                 // Als de kortinghouder een limiet op zijn korting heeft én
                 // de korting boven die limiet uitkomt, betaal gelimiteerd uit.
                 // Betaal anders regulier uit.
-                double prijsMetKorting = (1 - kortinghouder.geefKortingsPercentage()) * artikelPrijs;
-                korting = artikelPrijs - prijsMetKorting;
+                double prijsMetKaarthoudersKorting = (1 - kortinghouder.geefKortingsPercentage()) * artikelPrijs;
+                totaalKorting = artikelPrijs - prijsMetKaarthoudersKorting;
 
-                if (kortinghouder.heeftMaximum() && korting > kortinghouder.geefMaximum()) {
+                if (kortinghouder.heeftMaximum() && totaalKorting > kortinghouder.geefMaximum()) {
                     artikelPrijs -= kortinghouder.geefMaximum();
                 } else {
-                    artikelPrijs = prijsMetKorting;
+                    artikelPrijs = prijsMetKaarthoudersKorting;
                 }
             }
             totaalPrijs += artikelPrijs;
+            totaalKorting += artikelKorting;
         }
-        totaal = totaalPrijs;
+        this.totaalPrijs = totaalPrijs;
     }
 
     /**
      * @return het totaalbedrag
      */
     public double getTotaal(){
-        return totaal;
+        return totaalPrijs;
     }
 
     /**
      * @return de toegepaste korting
      */
     public double getKorting() {
-        return korting;
+        return totaalKorting;
     }
 
     public String getDatum() {
