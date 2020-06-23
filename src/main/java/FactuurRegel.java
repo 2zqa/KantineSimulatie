@@ -5,7 +5,7 @@ import java.io.Serializable;
 @Table(name="factuurregel")
 public class FactuurRegel implements Serializable {
     @Id
-    @Column(name = "id", unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)

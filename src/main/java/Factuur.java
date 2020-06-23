@@ -6,11 +6,12 @@ import java.util.Iterator;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="factuur")
+@Table(name = "factuur")
+//@NamedQuery(name = "Factuur.findByRegel", query = "SELECT ");
+
 public class Factuur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "id", unique = true)
     private Long id;
 
     @Column(name= "datum_tijd", nullable = false)
