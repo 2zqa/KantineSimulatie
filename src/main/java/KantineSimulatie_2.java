@@ -104,8 +104,8 @@ public class KantineSimulatie_2 {
             Artikel artikel = artikelen.get(artikelIndex);
 
             // Stel korting in
-            double artikelPrijsMetKorting = artikel.getPrijs() * (float)((korting)/100);
-            artikel.setKorting(artikelPrijsMetKorting);
+            double kortingBedrag = artikel.getPrijs() * (float)((korting)/100);
+            artikel.setKorting(kortingBedrag);
 
             // Vervang oude artikel zónder korting met artikel mét korting
             artikelen.set(artikelIndex, artikel);

@@ -117,12 +117,10 @@ public class Kassa {
     public void save(Factuur factuur) {
         EntityTransaction transaction = null;
         try{
-            // Get a transaction, sla de student gegevens op en commit de transactie
+            // Get a transaction, sla de factuurgegevens op en commit de transactie
             transaction = manager.getTransaction();
             transaction.begin();
-            manager.persist(factuur.getDatum());
-            manager.persist(factuur.getKorting());
-            manager.persist(factuur.getTotaal());
+            manager.persist(factuur);
             transaction.commit();
         } catch (Exception e) {
             // If there are any exceptions, roll back the changes
