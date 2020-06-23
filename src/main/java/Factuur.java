@@ -3,6 +3,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,9 @@ public class Factuur implements Serializable {
 
     @Column(name= "totaalprijs", nullable = false)
     private double totaal;
+
+    @Column(name="factuurregel")
+    private ArrayList<FactuurRegel> regels;
 
     public Factuur(Dienblad klant){
         this.datum = LocalDateTime.now();

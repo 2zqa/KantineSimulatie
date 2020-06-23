@@ -131,6 +131,5 @@ public class Kassa {
             }
             e.printStackTrace();
         }
-
     }
 }
