@@ -249,10 +249,25 @@ public class KantineSimulatie_2 {
             System.out.println("Totaalwinst van alle " +(i+1) + "ste dagen van de week: " + dagOmzetten[i]);
         }
         System.out.println("\naantal dagen gesimuleerd: " + dagen);
+        //TODO: de querys uitvoeren na de simulatie (opgave 3/5)
     }
 
     public static void main(String[] args) {
         KantineSimulatie_2 sim = new KantineSimulatie_2();
         sim.simuleer(30);
+    }
+
+    //de querys behorende bij opgave 3
+    public void query1(){
+        Query query = manager.createQuery("SELECT SUM(totaalprijs), SUM(totale_korting)  FROM Factuur f");
+        List<Factuur> resultatenlijst = query.getResultList();
+        
+        query = manager.createQuery("SELECT ");
+
+        query = manager.createQuery("SELECT ");
+    }
+
+    //de querys behorende bij opgave 5
+    public void query2(){
     }
 }
