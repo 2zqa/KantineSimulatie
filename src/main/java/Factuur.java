@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "factuur")
@@ -25,7 +26,7 @@ public class Factuur implements Serializable {
 
     @OneToMany(targetEntity = Factuur.class, mappedBy = "factuur",
             cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<FactuurRegel> regels;
+    private List<FactuurRegel> regels = new ArrayList<>();
 
     public Factuur(Dienblad klant){
         this.datum = LocalDateTime.now();
