@@ -1,15 +1,17 @@
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="factuur")
+@Table(name = "factuur")
+//@NamedQuery(name = "Factuur.findByRegel", query = "SELECT ");
+
 public class Factuur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "id", unique = true)
     private Long id;
 
     @Column(name= "datum_tijd", nullable = false)
@@ -20,6 +22,10 @@ public class Factuur implements Serializable {
 
     @Column(name= "totaalprijs", nullable = false)
     private double totaalPrijs;
+
+    @OneToMany(targetEntity = Factuur.class, mappedBy = "factuur",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList<FactuurRegel> regels;
 
     public Factuur(Dienblad klant){
         this.datum = LocalDateTime.now();
@@ -39,10 +45,10 @@ public class Factuur implements Serializable {
 
         double totaalPrijs = 0;
         while (it.hasNext()) {
-            Artikel artikel = it.next();
-            
+            Artikel artikel = it.next();       
             double artikelKorting = artikel.getKorting();
             double artikelPrijs = artikel.getPrijs() - artikelKorting;
+            regels.add(new FactuurRegel(this, artikel));
 
             /*
              NOTE: hieronder is een afweging gemaakt tussen:
@@ -101,7 +107,11 @@ public class Factuur implements Serializable {
      */
     @Override
     public String toString(){
-            return ("Datum: " + getDatum() + "\nKorting: " +
-                    getKorting() + "\nTotaalprijs: " + getTotaal());
+        String factuurregel = "";
+        for(FactuurRegel regel : regels){
+            factuurregel += regels.toString();
+        }
+        return ("Datum: " + getDatum() + "\nKorting: " +
+                getKorting() + "\nTotaalprijs: " + getTotaal() + factuurregel);
         }
 }
