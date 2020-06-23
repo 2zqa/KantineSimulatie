@@ -12,7 +12,7 @@ public class FactuurRegel implements Serializable {
     @JoinColumn(name = "factuur")
     private Factuur factuur;
 
-    @Column(name = "artikel", nullable = false)
+    @Embedded
     private Artikel artikel;
 
     public FactuurRegel() {}

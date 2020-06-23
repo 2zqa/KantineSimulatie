@@ -256,18 +256,4 @@ public class KantineSimulatie_2 {
         KantineSimulatie_2 sim = new KantineSimulatie_2();
         sim.simuleer(30);
     }
-
-    //de querys behorende bij opgave 3
-    public void query1(){
-        Query query = manager.createQuery("SELECT SUM(totaalprijs), SUM(totale_korting)  FROM Factuur f");
-        List<Factuur> resultatenlijst = query.getResultList();
-        
-        query = manager.createQuery("SELECT ");
-
-        query = manager.createQuery("SELECT ");
-    }
-
-    //de querys behorende bij opgave 5
-    public void query2(){
-    }
 }
