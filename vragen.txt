@@ -27,3 +27,5 @@
     d) Omdat een instantie variabele dan niet aangemaakt en veranderd kan worden
     e) final maakt een methode onuitbreidbaar, het kan niet overschreven worden. Wat bij abstracte methode ervoor zorgt dat deze niet gebruikt kunnen worden
 
+6.4 a)"een factuur bevat factuurregels". In dit geval is "factuur" is de one-kant en "factuurregel" is de many-kant. Er zal een kolom "factuur_id" zijn in de tabel "factuurregel"
+    e)Om herhalende groepen te voorkomen in de Database. En dit zorgt voor abstractie van de factuurregel

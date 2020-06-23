@@ -1,7 +1,4 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -11,7 +8,8 @@ public class FactuurRegel implements Serializable {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "factuur", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "factuur")
     private Factuur factuur;
 
     @Column(name = "artikel", nullable = false)
@@ -27,8 +25,8 @@ public class FactuurRegel implements Serializable {
     /**
      * @return een printbare factuurregel
      */
+    @Override
     public String toString(){
-        //methode body
-        return null;
+        return ("Artikel: " + artikel);
     }
 }

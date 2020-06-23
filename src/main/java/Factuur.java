@@ -22,7 +22,8 @@ public class Factuur implements Serializable {
     @Column(name= "totaalprijs", nullable = false)
     private double totaal;
 
-    @Column(name="factuurregel")
+    @OneToMany(targetEntity = Factuur.class, mappedBy = "factuur",
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private ArrayList<FactuurRegel> regels;
 
     public Factuur(Dienblad klant){
@@ -46,6 +47,7 @@ public class Factuur implements Serializable {
             Artikel artikel = it.next();
             double dagAanbiedingKorting = artikel.getKorting();
             double artikelPrijs = artikel.getPrijs() - dagAanbiedingKorting;
+            regels.add(new FactuurRegel(this, artikel));
 
             /*
              NOTE: hieronder is een afweging gemaakt tussen:
@@ -103,7 +105,11 @@ public class Factuur implements Serializable {
      */
     @Override
     public String toString(){
-            return ("Datum: " + getDatum() + "\nKorting: " +
-                    getKorting() + "\nTotaalprijs: " + getTotaal());
+        String factuurregel = "";
+        for(FactuurRegel regel : regels){
+            factuurregel += regels.toString();
+        }
+        return ("Datum: " + getDatum() + "\nKorting: " +
+                getKorting() + "\nTotaalprijs: " + getTotaal() + factuurregel);
         }
 }
