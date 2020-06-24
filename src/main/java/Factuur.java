@@ -8,8 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "factuur")
-//@NamedQuery(name = "Factuur.findByRegel", query = "SELECT ");
-
 public class Factuur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -108,11 +106,12 @@ public class Factuur implements Serializable {
      */
     @Override
     public String toString(){
-        String factuurregel = "";
+        String factuurregels = "";
         for(FactuurRegel regel : regels){
-            factuurregel += regels.toString();
+            factuurregels += regel.toString() + "\n";
         }
-        return ("Datum: " + getDatum() + "\nKorting: " +
-                getKorting() + "\nTotaalprijs: " + getTotaal() + factuurregel);
+
+        return "Factuur van: " + getDatum() + "\nGekochte artikelen:\n" + factuurregels.trim() +
+                "\n-------------\nKorting: " + getKorting() + "\nTotaalprijs: " + getTotaal();
         }
 }

@@ -27,6 +27,6 @@ public class FactuurRegel implements Serializable {
      */
     @Override
     public String toString(){
-        return ("Artikel: " + artikel);
+        return artikel.getNaam() + ": " + artikel.getPrijs();
     }
 }

@@ -44,7 +44,9 @@ public class Kassa {
             totaalAantalVerkochteArtikelen += aantalArtikelen;
             totaalHoeveelheidGeld += totaalPrijs;
             totaalHoeveelheidKorting += korting;
-            System.out.println(factuur.toString());
+
+            // Spamt alle facturen in de log
+            //System.out.println(factuur.toString() + "\n");
 
             //opslaan van de factuur in de database
             save(factuur);

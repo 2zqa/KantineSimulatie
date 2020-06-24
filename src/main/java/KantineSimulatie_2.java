@@ -1,9 +1,5 @@
 import java.util.*;
-import javax.persistence.Persistence;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-
+import javax.persistence.*;
 
 public class KantineSimulatie_2 {
     // Create an EntityManagerFactory when you start the application.
@@ -249,7 +245,99 @@ public class KantineSimulatie_2 {
             System.out.println("Totaalwinst van alle " +(i+1) + "ste dagen van de week: " + dagOmzetten[i]);
         }
         System.out.println("\naantal dagen gesimuleerd: " + dagen);
-        //TODO: de querys uitvoeren na de simulatie (opgave 3/5)
+
+        // Database statistieken
+
+        System.out.println("\n---6.3---");
+        //1
+        Query query = manager.createNativeQuery("SELECT sum(totaalprijs) FROM factuur");
+        double totaleTotaalPrijs = (double) query.getSingleResult();
+
+        query = manager.createNativeQuery("SELECT sum(totale_korting) FROM factuur");
+        double totaleToegepasteKorting = (double) query.getSingleResult();
+        System.out.println(" 1. totale omzet: " + rondGeldAf(totaleTotaalPrijs) + ", totale toegepaste korting: " + rondGeldAf(totaleToegepasteKorting));
+
+        //2
+        query = manager.createNativeQuery("SELECT avg(totaalprijs) FROM factuur");
+        double gemiddeldeOmzet = (double) query.getSingleResult();
+
+        query = manager.createNativeQuery("SELECT totale_korting FROM factuur");
+        List<Double> toegepasteKortingLijst = query.getResultList();
+        System.out.println(" 2. Gemiddelde omzet: " + rondGeldAf(gemiddeldeOmzet) + ", alle toegepaste kortingen: ");
+        String kortingen = "";
+        for(double toegepasteKorting : toegepasteKortingLijst) {
+            kortingen += toegepasteKorting + ", ";
+        }
+        // Print kortingen en verwijdert de "trailing komma"
+        System.out.println("     " + kortingen.replaceAll(", $", ""));
+
+        // 3
+        // Factuur heeft hoofdletter omdat dit moet, het pakt de klassenaam ipv de tabelnaam voor een of andere reden grrr
+        query = manager.createQuery("SELECT f FROM Factuur f ORDER BY totaalprijs", Factuur.class);
+        query.setMaxResults(3); // Vervangt LIMIT 3
+        List<Factuur> factuurLijst = query.getResultList();
+        System.out.println(" 3. Top 3 facturen met de hoogste omzet: ");
+        for(int i=0; i<3;i++) {
+            System.out.println((i+1) + ". " + factuurLijst.get(i) + "\n");
+        }
+
+        System.out.println("---6.5---");
+        //a
+        // Dit kan waarschijnlijk efficienter maar ik ben te lui om mijn eigen native query parser dingen te maken
+        query = manager.createNativeQuery("SELECT naam FROM factuurregel GROUP BY naam");
+        List<String> artikelNamen = (List<String>) query.getResultList();
+
+        query = manager.createNativeQuery("SELECT sum(prijs) FROM factuurregel GROUP BY naam");
+        List<Double> prijsTotalenPerArtikel = (List<Double>) query.getResultList();
+
+        query = manager.createNativeQuery("SELECT sum(korting) FROM factuurregel GROUP BY naam");
+        List<Double> kortingTotalenPerArtikel = (List<Double>) query.getResultList();
+
+        System.out.println(" a. totalen en toegepaste korting per artikel: ");
+        for(int i=0;i<artikelNamen.size();i++) {
+            System.out.println("     " + artikelNamen.get(i) + ": prijstotaal: " + prijsTotalenPerArtikel.get(i) + ", kortingtotaal: " + kortingTotalenPerArtikel.get(i));
+        }
+
+        //b
+        // Dit kan waarschijnlijk efficienter maar ik ben te lui om mijn eigen native query parser dingen te maken
+        query = manager.createNativeQuery("SELECT DAY(f.datum_tijd) FROM factuurregel AS fr LEFT OUTER JOIN factuur AS f ON f.id=fr.factuur GROUP BY DAY(f.datum_tijd), naam");
+        List<Integer> dagNummers = (List<Integer>) query.getResultList();
+
+        query = manager.createNativeQuery("SELECT fr.naam FROM factuurregel AS fr LEFT OUTER JOIN factuur AS f ON f.id=fr.factuur GROUP BY DAY(f.datum_tijd), naam");
+        List<String> artikelNamenPerDag = (List<String>) query.getResultList();
+
+        query = manager.createNativeQuery("SELECT sum(fr.prijs) FROM factuurregel AS fr LEFT OUTER JOIN factuur AS f ON f.id=fr.factuur GROUP BY DAY(f.datum_tijd), naam");
+        List<Double> prijsTotalenPerArtikelPerDag = (List<Double>) query.getResultList();
+
+        query = manager.createNativeQuery("SELECT sum(fr.korting) FROM factuurregel AS fr LEFT OUTER JOIN factuur AS f ON f.id=fr.factuur GROUP BY DAY(f.datum_tijd), naam");
+        List<Double> kortingTotalenPerArtikelPerDag = (List<Double>) query.getResultList();
+
+        System.out.println(" a. totalen en toegepaste korting per artikel per dag: ");
+        for(int i=0;i<dagNummers.size();i++) {
+            System.out.println("     Dag " + dagNummers.get(i) + ": " + artikelNamenPerDag.get(i) + ": prijstotaal: " + prijsTotalenPerArtikelPerDag.get(i) + ", kortingtotaal: " + kortingTotalenPerArtikelPerDag.get(i));
+        }
+
+        //c
+        query = manager.createNativeQuery("SELECT naam FROM factuurregel GROUP BY naam ORDER BY count(naam)");
+        query.setMaxResults(3); // Vervangt LIMIT 3
+        List<String> artikelLijstPopulair = (List<String>) query.getResultList();
+        System.out.println(" c. Top 3 meest voorkomende artikelen: ");
+        for(int i=0; i<3;i++) {
+            System.out.println("     " + (i+1) + ". " + artikelLijstPopulair.get(i));
+        }
+
+        //d
+        query = manager.createNativeQuery("SELECT naam FROM factuurregel GROUP BY naam ORDER BY sum(prijs) DESC");
+        query.setMaxResults(3); // Vervangt LIMIT 3
+        List<String> artikelLijstOmzet = (List<String>) query.getResultList();
+        System.out.println(" d. Top 3 artikelen met hoogste omzet: ");
+        for(int i=0; i<3;i++) {
+            System.out.println("     " + (i+1) + ". " + artikelLijstOmzet.get(i));
+        }
+    }
+
+    private double rondGeldAf(double getal) {
+        return Math.round(getal*100.0)/100.0;
     }
 
     public static void main(String[] args) {
